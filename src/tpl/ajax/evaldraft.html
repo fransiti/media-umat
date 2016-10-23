@@ -1,0 +1,13 @@
+<p class="lead">{$draft['judul']}</p>
+<small><p>{$draft['subjudul']}</p></small>
+<hr>
+{if not empty($draft['img'])}
+<img class="img-responsive" src="{$hta}image/{$draft['img']}/480">
+{/if}
+<br>
+<p><em>{$draft['ekserp']}</em></p>
+<br>
+{$draft['isi']}
+<br>
+<input type="hidden" name="id" value="{$draft['id']}">
+       

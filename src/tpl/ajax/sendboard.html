@@ -1,0 +1,8 @@
+{foreach $mboard as $key => $val}
+<small>
+<p><small><span class="text-info">{$val['author_nick']}</span> || <span class="text-warning"> {$val['tgl']} {$val['jam']}</span></small></p>
+<p>{$val['isi']}</p>
+</small>    
+<hr>
+{/foreach}
+<input type="hidden" name="submit" value="{$token}">

@@ -1,0 +1,77 @@
+.stok-item-edit {
+    background-color: #dadada;
+}
+
+
+/* crop */
+
+.cropit-preview {
+    background-color: #f8f8f8;
+    background-size: cover;
+    border: 1px solid #ccc;
+    margin-top: 7px;
+    width: 400px;
+    height: 300px;
+}
+
+.image-editor {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.cropit-preview-image-container {
+    cursor: move;
+}
+
+.cropit-preview-background {
+    opacity: .2;
+    cursor: auto;
+}
+
+.image-size-label {
+    margin-top: 10px;
+}
+
+input,
+.export {
+    /* Use relative position to prevent from being covered by image background */
+    position: relative;
+    z-index: 10;
+    display: block;
+}
+
+.icon-bg {
+    font-size: 128px;
+    width: 100%;
+    top: 20%;
+    left: 20%;
+}
+
+input[type=range] {}
+
+.icon-rem,
+.icon-rem:focus {
+    color: #cd0000;
+    background-color: transparent;
+    position: absolute;
+    top: 0.2em;
+    right: 0.8em;
+    z-index: 3;
+    font-size: 2em;
+    width: 1em;
+    line-height: 1em;
+    text-shadow: 2px 2px 1px #000;
+}
+
+.icon-rem:hover {
+    color: #ff0000;
+}
+.text-black{
+    color:#333;
+}
+.span-id{
+    width:50px;
+}
+.form-editor{
+    background-color: #f5f5f5;
+}

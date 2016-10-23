@@ -1,0 +1,48 @@
+
+<style>
+    .mboard{
+        background-color:#f8f8f8;
+        min-height=100%;
+        padding:10px;
+    }
+    .mboard-content{
+        min-height: 400px;
+    }
+</style>
+<div class="mboard">
+    <p class="text-muted text-right">
+        <small>Message Board</small>
+    </p>
+    <form name="mboard-form" class="form mbord-form" id="mboard-form" role="form">
+    <div class="mboard-content form-group" id="mboard-content">
+        
+    </div>
+        <div class="form-group">
+            <textarea name="isi" class="form-control" rows="4"></textarea>
+        </div>    
+        <div class="form-group text-right">
+            <button type="submit" name="submit" class="btn btn-primary" value="submit">Send</button>
+        </div>
+    </form>
+    <div class="clearfix col-pad-bottom-20"> </div>
+</div>      
+<script>
+    $(function(){
+        $('#mboard-content').load('{$hta}ajax/sendboard');
+        $('#mboard-form').submit( 
+            function(e){
+                e.preventDefault();
+                var s=$(this).serialize();
+                
+                $.post('{$hta}ajax/sendboard',$(this).serialize(),
+                    function(d){
+                        console.log(s);
+                        $('#mboard-content').html(d);
+                    })
+           
+                
+            });
+    });
+</script>    
+
+        
