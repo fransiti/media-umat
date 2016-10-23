@@ -120,7 +120,7 @@ class Admin extends BaseCtrl{
 
     
     function index(){
-        $this->redir('admin/page/1');
+        $this->redir('admin/login');
     }
     
     
@@ -291,7 +291,7 @@ class Admin extends BaseCtrl{
             file_put_contents( 
                 $dbcfg , '<?php'."\n".'$db = ' . var_export($array, true) . ';'
             );
-            $this->redir('admin');
+            $this->redir('admin/login');
         }
         $this->_view->set('db',$db);
     }
