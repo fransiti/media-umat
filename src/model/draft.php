@@ -27,5 +27,13 @@ class Draft extends Model{
         'ekserp'=>'VARCHAR(512)',
         'isi'=>'TEXT',
     );
+    
+    function evalCode(){
+        return array(
+            '1'=>'Saved',
+            '2'=>'Submitted',
+            '3'=>'Rejected',
+        );
+    }
 } 
         

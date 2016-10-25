@@ -1,32 +1,31 @@
 <?php
 /*
  tabel untuk wilayah leftjoin dengan author
+ region untuk pengda media umat
 */
 class Region extends Model{
     protected $columns = array (
-        'nama'=>'VARCHAR(128)',
+        'nama'    =>'VARCHAR(128)',
+        'wilayah' =>'VARCHAR(512)',
     );
-    protected $firsdata=array(
+    protected $firstdata=array(
         array(
-            'nama'=>'Dki',
+            'nama'=>'DKI',
+            'wilayah'=>'Jakarta,Bogor'
         ),
         array(
             'nama'=>'Jabar',
+            'wilayah'=>'Bandung, Tasikmalaya, Cirebon',
         ),
         array(
             'nama'=>'Jateng',
+            'wilayah'=>'Semarang, Surakarta, Tegal',
         ),
         array(
-            'nama'=>'Jatim',
-        ),
-        array(
-            'nama'=>'Kalimantan',
-        ),
-        array(
-            'nama'=>'Riau',
-        ),
-        array(
-            'nama'=>'Sulawesi',
+          'nama'=>'Jatim',
+          'wilayah'=>'Jawa Timur',   
         ),
     );
+
+/* end Region */
 }    

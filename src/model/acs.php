@@ -34,7 +34,15 @@ class Acs extends Model{
            'sandi'=>'admin',
            'level'=>'1',
         ),
-    );  
+    );
+    
+    function getLevel(){
+        return array(
+            '1'=>'Admin, Pemred ',
+            '2'=>'Redaktur, Editor',
+            '3'=>'Reporter, Kontributor, Koresponden',
+        );
+    }
     
 /* end of Acs */    
 }
