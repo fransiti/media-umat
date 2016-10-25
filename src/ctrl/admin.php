@@ -271,6 +271,10 @@ class Admin extends BaseCtrl{
         } 
     }
     
+    /* 
+     menangani akun dari admin (level 1)
+     */
+     
     function accounts(){
         $this->isLogin();
         $acs=new Acs;
@@ -292,6 +296,9 @@ class Admin extends BaseCtrl{
         $this->_view->set('accounts',$acs->select());
         $reg->orderBy('id','asc');
     }   
+    /*
+    hapus akun
+    */
     function accountdelete(){
         $this->isLogin();
         $acs=new Acs;
@@ -303,7 +310,9 @@ class Admin extends BaseCtrl{
             }
         }    
     }   
-    
+    /* 
+    menangani akun miliknya sendiri
+    */
     function accountchange(){
         $this->isLogin();
         $id=$this->_session->get('id');
