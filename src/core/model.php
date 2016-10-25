@@ -184,6 +184,23 @@ QRY;
       array_push($this->_joincols,$s);
     }
    }
+    /*
+    leftjoin tabel kedua
+     tabel_satu leftjoin table_dua,
+     table_dua leftjoin table_tiga
+    */
+    
+    function secLeftJoin($sectable,$table,$columns,$rev=0){
+        $s ='LEFT JOIN '.$table.' ON ';
+        $x = $table.'.id='.$sectable.'.'.$table.'_id';
+        $y = $sectable.'.id='.$table.'.'.$sectable.'_id';
+        $s .=$rev==0 ? $x : $y ;
+        array_push($this->_jointbl,$s);
+        foreach($columns as $key=>$val){
+            $s=$table.'.'.$key.' AS '.$table.'_'.$key;
+            array_push($this->_joincols,$s);
+        }
+    }   
 
   /* metod memasukkan nilai untuk WHERE .. AND */
    function andWhere($col,$val,$con='='){
@@ -584,9 +601,18 @@ QRY;
     foreach($this->columns as $key=>$val){
       $array[$key]='';
     }
-     return $array;
+    /*
+      $s=$table.'.'.$key.' AS '.
+      $table.'_'.$key;
+      array_push($this->_joincols,$s);
+     */
+    foreach($this->_joincols as $key){
+        list($_val,$_key)=explode('AS',str_replace(' ','',$key));
+        $array[$_key]='';
+    }
+    return $array;
   }
-    function tableName(){
+  function tableName(){
         return $this->_table;
     }
 

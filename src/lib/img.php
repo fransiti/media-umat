@@ -227,8 +227,9 @@ class Img{
         $this->_webdir='./upl/img';
     }
      function setDir($dir){
-        $this->_dir=$dir;
-        $this->_webdir='./'.$dir;
+        $this->_dir=ROOT_DIR.DS.'upl'.DS.$dir;
+        $this->_webdir='./upl/'.$dir;
+        if(!is_dir($this->_dir)) mkdir($this->_dir);
     }
     
     function getDir($file=null){

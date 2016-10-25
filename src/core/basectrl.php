@@ -88,7 +88,7 @@ class BaseCtrl{
         $this->_url=$this->_hta.strtolower($url);
     }
     
-    function setMeta($key,$val=null){
+    function settMeta($key,$val=null){
         if(is_array($key)){ 
             foreach($key as $_key=>$_val) 
                 $this->_meta[$_key]=$_val;

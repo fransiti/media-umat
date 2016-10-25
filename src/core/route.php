@@ -60,7 +60,8 @@ if (ini_get('register_globals')) {
 */
 
 $_get='';
-if(isset($_GET['u'])) $_get=str_replace(' ','_',strtolower($_GET['u']));
+if(isset($_GET['u'])) $_get=str_replace('-','_',strtolower($_GET['u']));
+$_get=str_replace(' ','_',$_get);
 unset($_GET);
 
 $_qry=explode('/',$_get);
