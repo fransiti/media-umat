@@ -17,11 +17,15 @@ class Content extends BaseCtrl{
         }
         $this->_page=empty($this->_qry[1])?'1':$this->_qry[1];
         if(!is_numeric($this->_page)) $this->_page='1';
-        
-        
+        $this->createMenu();
     }
+        
+        
     function index(){
+        
     }
-    
-    
+    function into(){
+        
+    }
+
 }

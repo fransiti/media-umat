@@ -22,6 +22,8 @@ class Image extends BaseCtrl{
     function index(){
         $file=empty($this->_qry[0])?'notfound.png':$this->_qry[0];
         $res=empty($this->_qry[1])?'medium':$this->_qry[1];
+        $dir=empty($this->_qry[2])?'img':$this->_qry[2];
+        $this->_img->setDir($dir);
         $this->_img->render($file,$res);
     }
     
@@ -54,19 +56,22 @@ class Image extends BaseCtrl{
     function upload(){
         
     }
+        
     /* 
      menangkap image yang dikirim dalamformat http->uri
      dengan form, contohnya dalam crop image halaman draft
      */
     function post(){
-        $id=empty($this->_qry[1])?'image-data':$this->_qry[1];
+        $ext=empty($this->_qry[0])?'png':$this->_qry[0];
+        $dir=(empty($this->_qry[1]))?'img':$this->_qry[1];
+        $id=empty($this->_qry[2])?'image-data':$this->_qry[2];
         $res='notfound.png';
+
         if($this->_post->submitted($id)){
-            $ext=empty($this->_qry[0])?'png':$this->_qry[0];
             if($ext!='png')$ext='jpg';
             $ext='post'.strtoupper($ext);
-            $img=new Img;
-            $res=$img->post($this->_post->get($id),$ext);
+            $this->_img->setDir($dir);
+            $res=$this->_img->post($this->_post->get($id),$ext);
         }
         echo $res;
     }

@@ -62,7 +62,34 @@ class Ajax extends BaseCtrl{
         $draft->leftJoin($menu->tableName(),$menu->colNames());
         $this->_view->set('draft',$draft->select($this->_qry[0]));
     }
-        
-        
+    
+    /*
+    konfirmasi hapus account
+    sama dengan ambil form hanya ganti template
+    */
+    function confirmaccountdel(){
+        $this->getaccount();
+    }
             
+    /*
+    form tambah/edit account
+    qry[0] acs id
+    */
+    function getaccount(){
+        $this->isLogin();
+        $acs=new Acs;
+        $author=new Author;
+        $region=new Region;
+        $id=empty($this->_qry[0])?'':$this->_qry[0];
+        if(!is_numeric($id))$id='';
+        $acs->leftJoin($author->tableName(),$author->colNames(),true);
+        $acs->secLeftJoin($author->tableName(),$region->tableName(),$region->colNames());
+        $this->_view->set('account',$acs->colNames());
+        if(!empty($id)) $this->_view->set('account',$acs->select($id));
+        $this->_view->set('level',$acs->getLevel());
+        $region->orderBy('nama','asc');
+        $this->_view->set('region',$region->select());
+    }
+    
+/* end Ajax */
 }

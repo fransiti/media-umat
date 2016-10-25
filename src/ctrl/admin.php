@@ -19,6 +19,9 @@ class Admin extends BaseCtrl{
         if(!$ret)  $this->redir($redir);
         $this->_view->set('acs',$this->_session->all());
         $this->_level=$this->_session->get('level');
+        $admmenu=new AdminMenu;
+        $this->_view->set('icon',$admmenu->getIcon());
+        $this->_view->set('admin_menu',$admmenu->getLevel($this->_level));
         return $ret;
     }
     
@@ -70,7 +73,7 @@ class Admin extends BaseCtrl{
         /* 
         periksa bila sudah login
         */
-      //  if($sesi->get('login')==$sesi->Id()) $this->redir('admin/page/1');
+        if($sesi->get('login')==$sesi->Id()) $this->redir('admin/draft');
         $acs=new Acs;
         $msg='Silahkan memasukkan Email dan Password';
         
@@ -107,6 +110,7 @@ class Admin extends BaseCtrl{
                 $res=$auth->autoCreate($account['id']);
                 $sesi->set('author_id',$res['id']);
                 $sesi->set('nick',$res['nick']);
+                $sesi->set('img',$res['img']);
                 $sesi->set('login',$sesi->Id());
                 $this->redir('admin/draft');
             }
@@ -141,8 +145,8 @@ class Admin extends BaseCtrl{
         $this->createMenu();
     }
         
-    function profil(){
-        //
+    function profiles(){
+        $this->isLogin();
     }
         
     function rilis(){
@@ -150,15 +154,13 @@ class Admin extends BaseCtrl{
         $posting=new Posting;
         $auth=new Author;
         $menu=new Menu;
+        $acs=new Acs;
         $posting->leftJoin($auth->tableName(),$auth->colNames());
         $posting->leftJoin($menu->tableName(),$menu->colNames());
+        $posting->leftJoin($acs->tableName(),$acs->colNames());
         $this->_view->set('rilis',$posting->select());
-        $this->_view->set('test',$posting->testQry());
     }
         
-    
-    
-    
     function submit(){
         $this->isLogin();
         $draft=new Draft;
@@ -238,6 +240,7 @@ class Admin extends BaseCtrl{
         $draft->leftJoin($menu->tableName(),$menu->colNames());
         $draft->andWhere('author_id',$this->_session->get('author_id'));
         $this->_view->set('draft',$draft->select());
+        $this->_view->set('evalcode',$draft->evalCode());
     }
     
     /*
@@ -268,7 +271,68 @@ class Admin extends BaseCtrl{
         } 
     }
     
+    function accounts(){
+        $this->isLogin();
+        $acs=new Acs;
+        $auth=new Author;
+        $reg=new Region;
+        if($this->_post->submitted()){
+            /*
+             * access level
+             */
+            $acs->add($this->_post->all());
+            $acs_id=$acs->save();
+            $auth->add($this->_post->all());
+            $auth->acs_id=$acs_id;
+            $auth->save();
+        }
+        $acs->andWhere('id','1','>');
+        $acs->leftJoin($auth->tableName(),$auth->colNames(),true);
+        $acs->secLeftJoin($auth->tableName(),$reg->tableName(),$reg->colNames());
+        $this->_view->set('accounts',$acs->select());
+        $reg->orderBy('id','asc');
+    }   
+    function accountdelete(){
+        $this->isLogin();
+        $acs=new Acs;
+        if($this->_post->submitted()){
+            $id=$this->_post->get('id');
+            if(!empty($id)&&$id>1){
+                $acs->delete($id);
+                $this->redir('admin/accounts');
+            }
+        }    
+    }   
     
+    function accountchange(){
+        $this->isLogin();
+        $id=$this->_session->get('id');
+        $acs=new Acs;
+        $author=new Author;
+        $region=new Region;
+        if($this->_post->submitted()){
+            if(empty($this->_qry[0])){
+                $author->add($this->_post->all());
+                $author->save($id);
+                $this->_session->set('nick',$this->_post->get('nick'));
+                $this->_session->set('img',$this->_post->get('img'));
+                $this->redir('admin/draft');
+            }else{
+            $acs->add($this->_post->all());
+            $acs->save($this->_post->get('id'));
+            $this->_session->close();
+            $this->redir('admin/login');
+            }
+        }
+        $region->orderBy('nama','asc');
+        $this->_view->set('region',$region->select());
+        $this->_view->set('level',$acs->getLevel());
+        $this->_view->set('access',$acs->select($id));
+        $id=$this->_session->get('author_id');
+        $this->_view->set('author',$author->select($id));
+    }
+        
+       
     /*
     *******************************
     meskipun config database
