@@ -15,11 +15,12 @@
                 <hr>
                 </div>
             </div>
-
             {foreach $rilis as $key=>$val}
             <div class="row">
                 <div class="col-md-12">
                     <address>
+                        
+                        <p class="text-right"><span class="text-muted">approvedby:</span>{$val['acs_email']}</p>
                         <strong>{$val['judul']}</strong><br>
                         <small class="text-muted">{$val['subjudul']}<br>
                         {$val['author_nick']}<br>

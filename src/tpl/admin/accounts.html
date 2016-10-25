@@ -1,0 +1,103 @@
+{include file="header.html"}{include file="banner.html"}
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3>Akun</h3>
+                    <div class="clearfix col-pad-bottom-20"></div>
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <a href="#a-editor" class="btn btn-success btn-account" data-id="" data-author-id="">
+                        Baru 
+                    </a>&nbsp;
+                </div>
+
+            </div>
+            {foreach $accounts as $key=>$val}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-4">
+                        {if not empty($val['author_img'])}
+                        <img class="img-responsive img-rounded" src="{$hta}image/{$val['author_img']}/120/ava"> {else}
+                        <img class="img-responsive img-rounded" src="{$hta}image/background/gray/120"> {/if}
+                    </div>
+                    <div class="col-md-8">
+                        <address>
+                        ID:{$val['author_id']}<br>
+                        <strong>{$val['author_nick']}<br></strong>
+                        {$val['email']}<br>
+                        {$val['author_nama']}<br>
+                        {$val['author_posisi']}<br>
+                        {$val['author_profesi']}<br>
+                        <small class="text-muted">Pengda : {$val['region_nama']}</small><br>
+                    </address>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right">
+
+                    <a href="#a-editor" class="btn btn-success btn-account" data-id="{$val['id']}" data-author-id="{$val['author_id']}">
+                        Edit 
+                    </a>&nbsp;
+                    <a href="#" class="btn btn-danger btn-account-delete" data-id="{$val['id']}" data-author-id="{$val['author_id']}">
+                        Hapus
+                    </a>
+                </div>
+                <hr>
+            </div>
+            {/foreach}
+            <br>
+            <div class="row">
+                <a name="a-editor"></a>
+                <div class="col-md-12 col-pad-bottom-10 form-editor"></div>
+                <div class="col-md-12 col-pad-bottom-10 form-editor">
+                    <form name="acount-editor" class="form" role="form" method="post" action="{$url}">
+                        <div id="account-editor"></div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            {include file="mboard.html"}
+        </div>
+    </div>
+</div>
+{* modal-delete *}
+<div class="modal fade" id="modal-account-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form name="form-confirm-delete" action="{$hta}admin/accountdelete" method="post" role="form">
+            <div id="modal-delete-confirm">
+                
+            </div>
+            </form>    
+        </div>
+    </div>
+</div>
+{* crop dan diletakkan di dalam upl/img/ava *}
+{$this_is_ava='1'}
+{include file="image-crop.html"}
+<script>
+    $(function () {
+        $('.btn-account').click(
+            function (e) {
+                var i = $(this).attr('data-id');
+                $.get('{$hta}ajax/getaccount/' + i, function (d) {
+                    $('#account-editor').html(d);
+                });
+            });
+        $('.btn-account-delete').click(function (e) {
+            e.preventDefault();
+            var i = $(this).attr('data-id');
+                $.get('{$hta}ajax/confirmaccountdel/' + i, function (d) {
+                $('#modal-delete-confirm').html(d);
+                $('#modal-account-delete').modal();    
+            });
+        });
+    });
+</script>
+{include file="footer.html"}

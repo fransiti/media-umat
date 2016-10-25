@@ -1,0 +1,78 @@
+<style>
+    .cropit-preview {
+        background-color: #f8f8f8;
+        background-size: cover;
+        border: 1px solid #ccc;
+        margin-top: 7px;
+        
+{if empty($this_is_ava)}
+        width: 400px;
+        height: 300px;
+{else}
+        width: 400px;
+        height: 400px;
+{/if}
+    }
+    
+</style>
+<div class="modal fade" id="cropit-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+    <form id="image-upload"><!-- method="post" enctype="multipart/form-data">-->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title text-center text-muted" id="myModalLabel">Upload Image</h4>
+            </div>
+            <div class="modal-body image-editor">
+                <input type="file" class="cropit-image-input">
+                <div class="cropit-preview img-responsive">
+                    <span class="glyphicon glyphicon-picture icon-bg"></span>
+                </div>
+                <div class="image-size-label">
+                    Resize image
+                </div>
+                <input type="range" class="cropit-image-zoom-input form-control">
+                <input type="hidden" name="image-data" id="image-data">
+                <input type="hidden" name="submit" value="dummy-submit">
+                <small>
+                <span class="text-info"><em>Ukuran file foto min : 150kb dan max : 2mb</em></span>
+                </small>    
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary" name="upload" value="Upload">
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="{$js}/jquery.cropit.js"></script>
+<script>
+    $(function(){
+        $('.image-editor').cropit({
+            imageBackground: true, 
+            imageBackgroundBorderWidth: 30, 
+        });
+        $('#image-upload').unbind().submit(function(){
+            var imageData = $('.image-editor').cropit('export', {
+                type: 'image/jpeg',
+                quality: 1,
+                originalSize: true,
+            });
+            $('#image-data').val(imageData);
+            var formValue = $(this).serialize();
+            $.ajax({
+                type:'post',
+                data:formValue,
+                url:'{$hta}image/post/jpg{if !empty($this_is_ava)}/ava{/if}',
+                success: function(d){
+                    var f='{$hta}image/'+d+'/320{if !empty($this_is_ava)}/ava{/if}';
+                    $('#img-file').val(d);
+                    $('#img-display').attr('src',f);                    
+                    $('#cropit-dialog').modal('hide');   
+                }
+            });
+            return false;
+        });
+    });
+</script>

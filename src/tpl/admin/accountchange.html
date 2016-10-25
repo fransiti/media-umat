@@ -1,0 +1,102 @@
+{include file="header.html"}{include file="banner.html"}
+<div id="page-wrapper">
+    <div class="container-fluid">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3>Ubah Profil Akun</h3>
+                    <div class="clearfix col-pad-bottom-20"></div>
+                    <hr>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="text-center">Data Lengkap</h6>
+                    </div>    
+            </div>    
+            
+            <div class="row">
+                <form name="form-author" action="{$url}" method="post" role="form" class="form">
+                <div class="col-md-4">
+                    <input type="hidden" name="id" value="{$author['id']}">
+                    <label for="img">Ava</label> 
+                    {if !empty($author['img'])}
+                    <img class="img-responsive img-rounded" src="{$hta}image/{$author['img']}/120/ava" id="img-display">{else}
+                    <img class="img-responsive img-rounded" src="{$hta}image/background/gray/120" id="img-display">{/if}
+                    <br>
+                    <input type="hidden" name="img" id="img-file"> 
+                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#cropit-dialog">Upload</a>
+                </div>
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="nick">Panggilan</label>
+                        <input type="text" name="nick" class="form-control" value="{$author['nick']}">  
+                    </div>
+                    <div class="form-group">
+                        <label for="nama">Nama</label>
+                        <input type="text" name="nama" class="form-control" value="{$author['nama']}">  
+                    </div>
+                    <div class="form-group">
+                        <label for="profesi">Profesi</label>
+                        <input type="text" name="profesi" class="form-control" value="{$author['profesi']}">  
+                    </div>
+                    <div class="form-group">
+                        <label for="posisi">Posisi</label>
+                        <input type="text" name="posisi" class="form-control" value="{$author['posisi']}">    
+                    </div>
+                    <div class="form-group">
+                        <label for="region_id">Pengda</label>
+                        <select name="region_id" class="form-control">
+                            {foreach $region as $key=>$val}
+                            <option value="{$val['id']}" {if $val['id'] eq $author['region_id']}selected="selected"{/if}>
+                                {$val['nama']} - {$val['wilayah']}
+                            </option>
+                            {/foreach}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="posisi">Tentang</label>
+                        <textarea name="tentang" class="form-control" rows="5">{$author['tentang']}</textarea>  
+                    </div>
+                </div>
+                <div class="col-md-12 text-right">
+                    <button type="submit" name="submit" value="submit" class="btn btn-primary">Save</button>
+                </div>
+                </form>        
+             </div>
+            <hr>    
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="text-center">Access</h5>
+                </div>
+            </div>
+            
+
+            <div class="row">
+                <form name="form-acs" action="{$url}/password" method="post" role="form" class="form">
+                    <div class="col-md-12">
+                            <input name="id" type="hidden" value="{$access['id']}">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" name="email" class="form-control" value="{$access['email']}">
+                        </div>
+                        <div class="form-group">
+                            <label for="sandi">Password</label>
+                            <input type="password" name="sandi" class="form-control" value="{$access['sandi']}">
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-right">
+                        <p><small class="text-info">Merubah access akan diminta untuk login dengan access baru</small></p>
+                        <button type="submit" class="btn btn-primary" name="submit" value="submit">Save</button>
+                    </div>
+            </div>
+            </form>
+        </div>
+        <div class="col-md-4">
+            {include file="mboard.html"}
+        </div>
+    </div>
+</div>
+{$this_is_ava='1'} {include file="image-crop.html"} {include file="footer.html"}

@@ -1,0 +1,71 @@
+<input type="hidden" name="id" value="{$account['id']}">    
+<div class="col-md-12">
+    <h5 class="text-center">Data Lengkap</h6>
+</div>    
+<div class="col-md-4">
+    <label for="img">Ava</label> 
+    {if !empty($account['author_img'])}
+    <img class="img-responsive img-rounded" src="{$hta}image/{$account['author_img']}/120/ava" id="img-display">{else}
+    <img class="img-responsive img-rounded" src="{$hta}image/background/gray/120" id="img-display">{/if}
+    <br>
+    <input type="hidden" name="img" id="img-file"> 
+    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#cropit-dialog">Upload</a>
+</div>
+<div class="col-md-8">
+    <div class="form-group">
+        <label for="nick">Panggilan</label>
+        <input type="text" name="nick" class="form-control" value="{$account['author_nick']}">  
+    </div>
+    <div class="form-group">
+        <label for="nama">Nama</label>
+        <input type="text" name="nama" class="form-control" value="{$account['author_nama']}">  
+    </div>
+    <div class="form-group">
+        <label for="profesi">Profesi</label>
+        <input type="text" name="profesi" class="form-control" value="{$account['author_profesi']}">  
+    </div>
+    <div class="form-group">
+        <label for="posisi">Posisi</label>
+        <input type="text" name="posisi" class="form-control" value="{$account['author_posisi']}">    
+    </div>
+    <div class="form-group">
+        <label for="region_id">Pengda</label>
+        <select name="region_id" class="form-control">
+            {foreach $region as $key=>$val}
+            <option value="{$val['id']}" {if $val['id'] eq $account['region_id']}selected="selected"{/if}>
+                {$val['nama']} - {$val['wilayah']}
+            </option>
+            {/foreach}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="posisi">Tentang</label>
+        <textarea name="tentang" class="form-control" rows="5">{$account['author_tentang']}</textarea>  
+    </div>
+</div>  
+<div class="col-md-12">
+    <hr>    
+    <h5 class="text-center">Access dan Level</h5>
+    <div class="form-group">
+        <label for="level">Level</label>
+        <select name="level" class="form-control">
+            {foreach $level as $key => $val}
+            <option value="{$key}">{$val}</option>
+            {/foreach}
+        </select>
+        
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" name="email" class="form-control" value="{$account['email']}">
+    </div>
+    <div class="form-group">
+        <label for="sandi">Password</label>
+        <input type="text" name="sandi" class="form-control" value="{$account['sandi']}">
+
+    </div>
+    <hr>
+    <div class="form-group text-right">
+        <button type="submit" class="btn btn-primary" name="submit" value="submit">Save</button>
+    </div>
+</div>
