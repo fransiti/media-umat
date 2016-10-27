@@ -8,6 +8,7 @@ Apabila controller diturunkan dari BaseCtrl, maka kelas view telah diinisialisas
 Method-method dari View antara lain
 
 - set($nama_variabel,$nilai_variabel) untuk meletakkan variabel dalam template
+
 - setTpl($nama_template) mengganti template dari template defaultnya. 
 Default template adalah nama methodnya misalnya controller Admin, methodnya login(), maka templatenya adalah `./tpl/admin/login.html`
        
@@ -51,7 +52,7 @@ berikut ini contoh penulisan script yang ditolak
             $(function()){ $('.btn').click(function(e){ console.log('clicked'); }) }
         </script>
 
-tulis dengan seperti ini
+tulis script  seperti ini
 
         <script>
             $(function({
@@ -79,7 +80,7 @@ Sintaks yang umum dipakai dalam smarty
 
 - {$var.nama.subnama}, {$var['nama'].subnama}, {$var.nama['subnama']}  sama dengan `<?php echo $var['nama']['subnama'];?>`
 
-- {*  *}  sintaks untuk menuliskan komentar
+- {\*  \*}  sintaks untuk menuliskan komentar
 
 - {if $var eq 1 } .. {/if} atau {if $var=1} .. {else} .. {/if} sama dengan <?php if($var=1){ ?> .. <?php } ?>
 
