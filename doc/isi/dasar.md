@@ -27,7 +27,7 @@ yang telah tentukan dengan $route dalam file cfg/base.php sehingga menjadi
 
     /?=method/qry[0]../qry[n]
 
-contohnya,
+contohnya, dalam cfg/base.php ditentukan $route='admin' maka 
 
     /?=login
     
