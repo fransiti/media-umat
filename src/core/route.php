@@ -8,9 +8,6 @@ include $dbcfg;
 $record_perpage=$db['rec'];
 $_hta=(HT_ACCESS==0)?'?u=':'';
 
-$default_control='content';
-$default_method='index';
-
 error_reporting(E_ALL);
 if(DEV_MODE==1){
     ini_set('display_errors','On');
@@ -56,8 +53,11 @@ if (ini_get('register_globals')) {
 
 /* 
     routing 
-    default "content/index"
+    default "content/index" atau yang ditentukan dengan $route
 */
+$default_control=empty($route)?'content':strtolower($route);
+$default_method='index';
+
 
 $_get='';
 if(isset($_GET['u'])) $_get=str_replace('-','_',strtolower($_GET['u']));

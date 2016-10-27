@@ -27,8 +27,8 @@ class BaseCtrl{
         unset($_baseurl);
         
         
-        
-        $this->_qry=$_qry;
+        $this->_qry[0]='';
+        if(!empty($_qry)) $this->_qry=$_qry;
         unset($_qry);
         
         $this->_hta=$_hta;
@@ -43,12 +43,13 @@ class BaseCtrl{
         if($this->_render){
             if(!empty($this->_baseurl))
                 $this->_baseurl=$this->_hta.$this->_baseurl;
-            $this->_view->set('hta',$this->_hta);
-            $this->_view->set('url',$this->_hta.$this->_url);
-            $this->_view->set('baseurl',$this->_baseurl);
-            $this->_view->set('header',$this->_header);
-            $this->_view->set('meta',$this->_meta);
-            $this->_view->render();
+                $this->_view->set('hta',$this->_hta);
+                $this->_view->set('url',$this->_hta.$this->_url);
+                $this->_view->set('baseurl',$this->_baseurl);
+                $this->_view->set('qry',$this->_qry);
+                $this->_view->set('header',$this->_header);
+                $this->_view->set('meta',$this->_meta);
+                $this->_view->render();
         }
     }
     protected function createMenu(){

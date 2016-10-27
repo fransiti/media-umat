@@ -211,6 +211,15 @@ QRY;
       $s.=' '.$con.' '.$this->sanitize($val);
       array_push($this->_and,$s);
    }
+  /* metod memasukkan nilai untuk WHERE .. AND */
+   function andWhereFunction($col,$val,$con='='){
+      /* memeriksa bila kolom memakai nama tabel */
+      $array=explode('.',$col);
+      $s=(count($array)<2)?
+        $this->_table.'.'.$col : $col;
+      $s.=' '.$con.' '.$val;
+      array_push($this->_and,$s);
+   }
 
    /* metod memasukkan nilai untuk WHERE .. OR */
    function orWhere($col,$val,$con='='){
@@ -218,6 +227,13 @@ QRY;
       $s=(count($array)<2)?
       $this->_table.'.'.$col : $col;
       $s.=' '.$con.' '.$this->sanitize($val);
+      array_push($this->_or,$s);
+   }
+   function orWhereFunction($col,$val,$con='='){
+      $array=explode('.',$col);
+      $s=(count($array)<2)?
+      $this->_table.'.'.$col : $col;
+      $s.=' '.$con.' '.$val;
       array_push($this->_or,$s);
    }
 
@@ -620,6 +636,11 @@ QRY;
    * hubungan dengan server MySQL */
   function __destruct(){
     $this->disconnect();
+  }
+    
+  function selectFunction($sqlfunction){
+      $res=$this->qry('SELECT '.$sqlfunction.' AS f FROM '.$this->_table.' LIMIT 1' );
+      return $res[0]['f'];
   }
 
  /* akhir kelas Model */

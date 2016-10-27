@@ -1,0 +1,22 @@
+## BAB V. CONTOH QUERY
+
+_BELUM SELESAI_
+
+#### INSERT/UPDATE
+
+
+#### DELETE
+
+
+#### SELECT
+
+
+
+#### SELECT LEFT JOIN 
+
+
+
+
+
+---
+##### akhir BAB IV. LIBRARY

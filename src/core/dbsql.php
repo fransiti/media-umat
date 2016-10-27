@@ -128,7 +128,6 @@ class DbSQL {
   /* method untuk menghubungi MySQL */
   function testQry(){
      return $this->_testqry;
-  }
-
+  }    
 /* akhir kelas DbSQL */
 }
