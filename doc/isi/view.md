@@ -107,7 +107,7 @@ Path relatif untuk script dan style
 - {$img} path img, ini bukan direktori upload untuk image, melainkan untuk image tambahan seperti image untuk loading dll
 - {fonts} path untuk fonts
 
-Untuk lebih jelasnya lihat **Bab V.CONTOH**
+Untuk lebih jelasnya lihat **Bab VI.CONTOH**
 
 ---
 ##### akhir BAB III. VIEW
