@@ -99,6 +99,7 @@ Akun mempunyai dua buah method, yaitu index dan login
                             */
                             $message='Login Salah, periksa akun dan password';
                         }
+                        $this->_view->set('message',$message);
                         
                     }
                         
@@ -145,7 +146,7 @@ yaitu index.html untuk login berhasil dan login untuk form mengirim data login
                     <body>
                         <h2>Login</h2>
                         {* message *}
-                        {$mgs}
+                        {$message}
                         <hr>
                         <form name="form-login" action="{$url}" method="post">
                         <label>Nama</label><br>
