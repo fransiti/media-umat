@@ -1,4 +1,4 @@
-## BAB III. TEMPLATE
+## TEMPLATE
 
 
 #### KELAS VIEW
@@ -7,22 +7,24 @@ Apabila controller diturunkan dari BaseCtrl, maka kelas view telah diinisialisas
 
 Method-method dari View antara lain
 
-- set($nama_variabel,$nilai_variabel) untuk meletakkan variabel dalam template
+- set($nama\_variabel,$nilai\_variabel) untuk meletakkan variabel dalam template
 
-- setTpl($nama_template) mengganti template dari template defaultnya. 
-Default template adalah nama methodnya misalnya controller Admin, methodnya login(), maka templatenya adalah `./tpl/admin/login.html`
+- setTpl($nama\_template) mengganti file template dari template defaultnya. $nama\_template tanpa extensi.
+Default filetemplate adalah nama methodnya misalnya controller Admin, methodnya login(), maka templatenya adalah `./tpl/admin/login.html`
        
-- setDir($dir) mengganti direktori template misalnya 
+- setDir($dir) mengganti direktori template 
+
+contoh  
     
         /* 
-            merubah direktori template dan file template menjadi
-           ./tpl/lain/halaman.html
+        merubah direktori template dan file template menjadi
+        tpl/lain/halaman.html
         */   
         $this->_view->setDir('lain');
         $this->_view->setTpl('halaman');
         
         
-- fetch() template hanya dirender dalam buffer misalnya
+- fetch() template hanya dirender dalam buffer
 
         // jangan merender template lagi
         $this->_render=false;
@@ -31,7 +33,7 @@ Default template adalah nama methodnya misalnya controller Admin, methodnya logi
         echo $buffer;
 
 - render() merender dan mengirimkan template ke browser, fungsi ini secara explisit tidak perlu dilakukan, 
-karena controller otomatis akan merender di akhir rutin lihat method ` __destruct()` dalam `/ctrl/basectrl.php`
+karena controller otomatis akan merender di akhir rutin (lihat method ` __destruct()` dalam `/ctrl/basectrl.php`)
 
 #### TEMPLATE
 
@@ -78,13 +80,13 @@ Sintaks yang umum dipakai dalam smarty
 
 - {$var.nama}, {$var['nama']} sama dengan `<?php echo $var['nama']; ?>`
 
-- {$var.nama.subnama}, {$var['nama'].subnama}, {$var.nama['subnama']}  sama dengan `<?php echo $var['nama']['subnama'];?>`
+- {$var.nama.subnama}, {$var\['nama'].subnama} atau {$var.nama\['subnama']}  sama dengan `<?php echo $var['nama']['subnama'];?>`
 
 - {\*  \*}  sintaks untuk menuliskan komentar
 
 - {if $var eq 1 } .. {/if} atau {if $var=1} .. {else} .. {/if} sama dengan <?php if($var=1){ ?> .. <?php } ?>
 
-- {foreach $var as $key=>$val} .. {/foreach}
+- {foreach $var as $key=>$val} .. {/foreach} sama dengan <?php foreach($var as $key=>$val){ ?> .. <?php } ?> 
 
 
 
@@ -98,17 +100,17 @@ Dari template sudah ada variabel yang siap dipakai yaitu
 - {$url} atau sama dengan `$_GET['u']` 
 
 
-Path relatif untuk script dan style
+Path relatif untuk script dan style menurut foldernya
 
-- {$css} path  css
+- {$css} path untuk file css
 
-- {$js} path js
+- {$js} path untuk file js
 
-- {$img} path img, ini bukan direktori upload untuk image, melainkan untuk image tambahan seperti image untuk loading dll
+- {$img} path untuk file img, ini bukan direktori upload untuk image, melainkan untuk image tambahan seperti image untuk loading dll
+
 - {fonts} path untuk fonts
 
-Untuk lebih jelasnya lihat **Bab VI.CONTOH**
 
 ---
-##### akhir BAB III. VIEW
+##### akhir TEMPLATE
 

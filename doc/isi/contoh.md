@@ -1,8 +1,8 @@
-## BAB VI. CONTOH PRAKTIS
+## CONTOH PRAKTIS
 
 Berikut ini adalah contoh implementasi, controller, model dan view, 
 
-kita akan membuat kontak atau **`?u=kontak`**
+kita akan membuat kontak atau urlnya **`?u=kontak`**
 
 Buat file **model/kontakmodel.php**
 
@@ -40,19 +40,28 @@ Buat file **model/kontakmodel.php**
 
 Buat Controllernya file **ctrl/kontak.php**
 
-            <?php
-                class Kontak extends BaseCtrl{
-                    /*
-                    method default menampilkan seluruh kontak
-                    */
-                    function index(){
-                        $this->addModel('KontakModel');
-                        /* 
-                        menampilkan record, 
-                        dalam template dengam variabel {$kontak}
+Mempunyai tiga buah method yaitu 
+
+- index() menampilkan daftar kontak
+- submit() form menambah dan mengubah kontak
+- delete() menghapus kontak 
+
+.
+
+                <?php
+                    class Kontak extends BaseCtrl{
+                        /*
+                        method default menampilkan seluruh kontak
                         */
-                        $this->_view->set('kontak',$this->KontakModel->select());
-                    }
+                        function index(){
+                            $this->addModel('KontakModel');
+                            
+                            /* 
+                            menampilkan record, 
+                            dalam template dengam variabel {$kontak}
+                            */
+                            $this->_view->set('kontak',$this->KontakModel->select());
+                        }
 
             
                     /* 
@@ -112,7 +121,9 @@ Buat Controllernya file **ctrl/kontak.php**
 
 .
 
-Membuat dua buah template yaitu index untuk daftar kontak dan submit untuk tambah atau ubah kontak
+Dari Controller diatas kita membuat dua buah template yaitu  index.html untuk daftar kontak 
+dan submit.html untuk menambah atau mengubah kontak , sedangkan delete tidak mempunyai template, karena langsung redirect ke index.
+        
 
 - file **tpl/kontak/index.html**
     
@@ -182,7 +193,7 @@ Membuat dua buah template yaitu index untuk daftar kontak dan submit untuk tamba
 
             </html>
             
-silahkan  lihat di url `?u=kontak`
+sekarang kita coba lihat di url `?u=kontak`
                 
 ---
-##### akhir BAB V. Contoh
+##### akhir CONTOH PRAKTIS
