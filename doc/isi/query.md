@@ -1,7 +1,5 @@
 ## BAB V. CONTOH QUERY
-
-_BELUM SELESAI_
-
+ 
 #### INSERT/UPDATE
 
 

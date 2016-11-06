@@ -9,7 +9,6 @@
     <meta name="email" content="agus.ariyanto.solo@gmail.com">
     <title>PHP FRAMEWORK | MEDIA UMAT</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/prism.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -22,8 +21,29 @@
             background-color: #fafafa;
             border-bottom: 1px solid #eaeaea;
         }
-        h2 { text-align: center; line-height: 2em; }
-        h5 { text-align: right; }
+        h2 {
+            text-align: center;
+            
+        }
+        h3 { 
+            padding-bottom: 1.5em;
+            text-align: center; 
+            line-height: 2.5em;
+            
+        }
+
+        h5 { 
+            margin-top:2em;
+            text-align: right; 
+        }
+        
+        h4,h6{
+            margin-top:2em;
+        }
+        
+        
+        
+        
         .page-wrapper {
             margin-top: 1em;
         }
@@ -36,39 +56,48 @@
         .sidebar > ul > li > a{
             line-height: 2em;
         }
+        
+        img{
+            width:90%;
+        }
     </style>
 </head>
 
 <body>
         <header>
             <div class="container">
-            <h3>Dokumentasi PHP Framework<br><small>Untuk Media Umat</small></h3>
+            <h2>Dokumentasi PHP Framework<br><small>Untuk Media Umat</small></h2>
             </div>    
         </header>
     <div class="container page-wrapper">
         <div class="row">
             <div class="col-md-2 sidebar">
+                <strong>BAGIAN SATU</strong>
                 <ul>
+                    <li>
+                        <a class="isi" href="prototype.md">PROTOTYPE</a>
+                    </li>
+                </ul>    
+                <strong>BAGIAN DUA</strong>
+                <ul>    
+                        
                     <li>
                         <a class="isi" href="dasar.md">DASAR</a>
                     </li>
                     <li>
-                        <a class="isi" href="model.md">MODEL</a>
-                    </li>
-                    <li>
-                        <a class="isi" href="view.md">TEMPLATE</a>
-                    </li>
-                    <li>
-                        <a class="isi" href="contoh.md">CONTOH PRAKTIS</a>
+                        <a class="isi" href="kelas-kelas.md">KELAS KELAS</a>
                     </li>
                     <li>
                         <a class="isi" href="library.md">LIBRARY</a>
                     </li>
                     <li>
+                        <a class="isi" href="contoh.md">CONTOH PRAKTIS</a>
+                    </li>
+                    <li>
                         <a class="isi text-muted" href="query.md">CONTOH QUERY</a>
                     </li>
                     <li class="disabled">
-                        <a class="isi text-muted" href="login-session.md">CONTOH LOGIN (SESSION)</a>
+                        <a class="isi" href="login-session.md">CONTOH LOGIN (SESSION)</a>
                     </li>
                     <li>
                         <a href="smarty-doc/">SMARTY - DOC</a>
@@ -77,11 +106,6 @@
                 </ul>
             </div>
             <div class="col-md-10" id="content">
-                Membaca Dokumentasi ini harus  dipasang di local server <br>
-                Tidak Bisa dengan file:// atau klik dari file manager<br>
-                <br>
-                Atau silahkan buka di <a href="http://www.wk-5.com/doc">http://www.wk-5.com/doc</a>
-                
             </div>
         </div>
 
@@ -89,20 +113,43 @@
 
     <script src="js/bootstrap.min.js"></script>
     <script src="js/markdown.min.js"></script>
-    <script src="js/prism.js"></script>
+    
     <script>
+        
         $(function () {
-            $.get('isi/dasar.md', function(d){
+            var l=' <style>'+
+                '.-loading{  '+
+                'width: 100%;'+
+                'text-align: center;'+
+                'height: 400px;'+
+                'line-height: 400px;'+
+                'padding-top: 128PX;'+
+                '}'+
+                '.-loading > span{'+
+                'font-size: 128px;'+
+                'color: #dadada;'+
+                '}'+
+                '</style>'+
+                '<div class="text-center -loading">'+
+                '<span class="glyphicon glyphicon-time"></span>'+
+                '</div>';
+            $('#content').html(l)
+            $.get('isi/prototype.md', function(d){
                 var i=markdown.toHTML(d);
                 $('#content').html(i);
-            });
+                $('#content').highlight();
+                });
+
+            
             $('.isi').on('click', function (e) {
                 e.preventDefault();
+                $('#content').html(l);
                 var u = $(this).attr('href');
-                console.log(u);
+                
                 $.get('isi/' + u, function (d) {
                     var i = markdown.toHTML(d);
                     $('#content').html(i);
+                   $('#content').highlight();
                 });
             });
         });

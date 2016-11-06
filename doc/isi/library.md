@@ -1,4 +1,4 @@
-## BAB IV. LIBRARY
+## LIBRARY
 
 #### SESSION
 
@@ -75,6 +75,9 @@ preffix adalah awalan sebelum nama file dengan default `'p'`. Mengembalikan nama
 
 #### IMG
 
+*Kelas Image sudah dibuatkan Controllernya, lihat ctrl/image.php*
+
+
 Kelas untuk menangani image, image yang didukung adalah jpg, gif dan png.
 
 Method-methodnya yaitu
@@ -85,7 +88,7 @@ Method-methodnya yaitu
 
 - background($color,$resolusi,$extension), menampilkan image kosong dengan warna `$color`, sebesar `$resolusi` dan ekstensi yang diminta.
 `$color` dapat berisi nilai hexa atau valid nama color misalnya silver,aqua,red dll ( lihat property `$_color` dalam **lib/img.php** ).
-resolusi dapat berupa format` widthxheight` misalnya `200x100` akan menampilkan lebar 200px dan tinggi 100px, atau hanya lebar misalnya `200`,
+resolusi dapat berupa format` width x height` misalnya `200x100` akan menampilkan lebar 200px dan tinggi 100px, atau hanya lebar misalnya `200`,
 atau dengan salah satu kata `tiny,thumb,small,medium,large,huge`. 
 
 - save($file, preffix) menyimpan file image, file disimpan dengan nama `uniqid()` dengan preffix `$preffix`
@@ -94,11 +97,13 @@ Misalnya dari capture canvas. Contoh penggunaan, lihat **tpl/admin/image-crop.ht
 dan **ctrl/image.php**  sebagai penerima export canvas. extension adalah ekstensi yang diinginkan.
 
 - render($file,$resolusi) Menampilkan image dengan resolusi `$resolusi`, 
-nilai resolusi bisa dengan angka `width x height` atau dengan kata, sama dengan method `save()`
+nilai resolusi bisa dengan ukuran `width` untuk height menurut aspek rasio, atau stretch dengan ukurab `width x height`, 
+atau dengan salah satu kata `tiny,thumb,small,medium,large,huge` , height akan ditampilkan sesuai aspek rasio.
 
 - delete($file) menghapus file image 
 
+---
+
 .
 
----
-##### akhir LIBRARY
+##### akhir library

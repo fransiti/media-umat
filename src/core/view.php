@@ -29,6 +29,7 @@ class View{
             }
         }
         */
+        
         require_once( ROOT_DIR.DS.'smarty'.DS.'libs'.DS.'Smarty.class.php');
         $smt=new Smarty;
         $smt->setTemplateDir(ROOT_DIR.DS.$this->_dir);

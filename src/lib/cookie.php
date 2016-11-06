@@ -34,6 +34,10 @@ class Cookie{
       if(empty($key)) return $_COOKIE;
       return isset($_COOKIE[$key])? $_COOKIE[$key]:false;
   }
+    
+  function all(){
+      return $_COOKIE;
+  }    
 
 
   /* menghapus sebuah nilai cookie */
@@ -45,15 +49,13 @@ class Cookie{
   function close(){
       foreach($_COOKIE as $key=>$val) $this->delete($key);
   }
-  function createToken(){
+  function createToken($key=null){
       $s=sha1(uniqid());
-      $this->set('token',$s);
+      $token=empty($key)?'token':$key;
+      $this->set($key,$s);
       $this->_token=$s;
       return $s;
   }
-  function token(){
-      return $this->_token;
-  }    
 
 /* akhir kelas Cookie */
 }

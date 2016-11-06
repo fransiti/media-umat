@@ -1,3 +1,14 @@
+{*
+ini adalah contoh banner 
+yang diikutkan dalam index.html
+sintaks penulisan mengikuti sintaks Smarty
+silahkan lihat cara menampilkan menu
+--
+untuk saat ini menu hanya dua level
+yaitu menu menyamping 
+dan submenu dropdown.
+
+*}
 <style>
     html{
         height:100%;
@@ -44,6 +55,9 @@
     <h2>{$header['subtitle']}</h2>
     </div>    
 </header>
+{*
+Banner
+*}
 <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -60,7 +74,16 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        {foreach $menu as $key=>$val}
+          
+{*
+           contoh menampilkan menu 
+           dalam controllernya dipanggil dengan dengan 
+               $this->creatMenu();
+
+--------------------------------------------------------------------------------------
+*}
+          
+        {foreach $rubrik as $key=>$val}
           {if empty($val['submenu'])}
             <li><a href="{$hta}into/{$val['url']}">{$val['nama']}</a></li>
           {else}
@@ -74,6 +97,14 @@
             </li>
           {/if}
         {/foreach}
+        
+{*
+          
+-------------------------------------------------------------------------------          
+          
+*}
+          
+          
       </ul>
       <form class="navbar-form navbar-right" role="search">
         <div class="form-group">

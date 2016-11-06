@@ -10,6 +10,7 @@ class Img{
         'medium'=>'520',
         'big'   =>'960',
         'large' =>'1280',
+        'huge' =>'2560',
     );
     protected $_color= array(
         'aliceblue'=>'#f0f8ff',

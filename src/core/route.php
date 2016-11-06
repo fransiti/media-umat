@@ -5,6 +5,7 @@ $basecfg=ROOT_DIR.DS.'cfg'.DS.'base.php';
 $dbcfg=ROOT_DIR.DS.'cfg'.DS.'db.php';
 include $basecfg;
 include $dbcfg;
+
 $record_perpage=$db['rec'];
 $_hta=(HT_ACCESS==0)?'?u=':'';
 
@@ -48,8 +49,7 @@ if (ini_get('register_globals')) {
 }
 
 
-
-
+    
 
 /* 
     routing 
@@ -60,9 +60,17 @@ $default_method='index';
 
 
 $_get='';
-if(isset($_GET['u'])) $_get=str_replace('-','_',strtolower($_GET['u']));
+if(isset($_GET['u'])) $_get=strtolower($_GET['u']);
+
+/*
+koreksi $_GET
+*/
+$_get=str_replace('-','_',$_get);
 $_get=str_replace(' ','_',$_get);
+$_get=str_replace('//','/',$_get);
+$_get=str_replace('=/','',$_get);
 unset($_GET);
+
 
 $_qry=explode('/',$_get);
 $ctrl=empty($_qry)?$default_control:$_qry[0];
@@ -83,8 +91,7 @@ if(method_exists($ctrl,$mtd)){
     $mtd=$default_method;
 }
 
-$_baseurl=$ctrl==$default_control?'':$ctrl.'/';
-$_baseurl.=$mtd==$default_method?'':$mtd;
+$_baseurl=$ctrl==$default_control?'':$ctrl;
 
 $ctrl=ucfirst($ctrl);
 

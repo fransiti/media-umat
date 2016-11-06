@@ -32,7 +32,10 @@ Buat model untuk tabel tbakun  **model/tbakun.php**
 
 Buat sebuah controller Akun **ctrl/akun.php**
 
-Akun mempunyai dua buah method, yaitu index dan login
+Akun mempunyai dua buah method, yaitu 
+- index halaman bila berhasil login 
+- login  form untuk submit login
+
 
         <?php
             
@@ -135,7 +138,7 @@ yaitu index.html untuk login berhasil dan login untuk form mengirim data login
                     </body>
                 </html>
                 
-- buat template **tpl/akun/login.html
+- buat template **tpl/akun/login.html**
 
                 <!doctype html>
                 <html>

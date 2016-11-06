@@ -23,7 +23,8 @@ class Post{
         return $s?$this->_vars:false;
     }
     
-	function get($key){
+	function get($key=null){
+        if(empty($key)) return $this->all();
         return isset($this->_vars[$key])? $this->_vars[$key] : false;
 	}
 

@@ -1,4 +1,10 @@
+{* 
+menyertakan file header.html dan banner.html
+ps: Lihat cara menampilkan menu dalam banner.html
+
+*}
 {include file="header.html"} {include file="banner.html"}
+
 <style>
     .board{
         padding-top: 100px; 
@@ -7,10 +13,15 @@
 <div class="col-md-8 col-md-offset-3 board">
 Halaman untuk pembaca belum dibuat,<br>
 Silahkan login untuk melihat konsep alur core<br>
-email dan password sudah saya kasih wag<br>....<br>
+email:<strong>admin@email</strong> dan password:<strong>admin</strong><br>....<br>
 kode sumber dapat diambil di <a href="http://github.com/agus-ariyanto/media-umat">http://github.com/agus-ariyanto/media-umat</a><br><br>    
+
     
 <a href="{$hta}admin/login" class="btn btn-primary">&nbsp;&nbsp;LOGIN&nbsp;&nbsp;</a>    
+<br>
 </div>
 
+{*
+ menyertakan file footer.html
+*}
 {include file="footer.html"}
