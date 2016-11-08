@@ -34,7 +34,7 @@ kita singkat selanjutnya
     
     ?=u
 
-Controller default adalah Content atau ditentukan dengan `$route` dalam cfg/base.php.
+Controller default-nya adalah `Content`. Controller default ini bisa diubah dengan menentukan  `$route` dalam cfg/base.php.
 
 Apabila controller tidak ditemukan maka request dianggap sebagai method dari controller default-nya, atau menjadi
 
@@ -46,7 +46,7 @@ atau sama dengan memanggil
     
 Method default adalah `index()`
 
-Maka apabila method diatas tidak ditemukan, maka request dianggap memanggil method index() dari sebagai qry, sehingga untuk request
+Maka apabila method diatas tidak ditemukan, maka request dianggap memanggil method `index()`, sehingga untuk request
 
     ?u=qry[0]../qry[n]
     
@@ -58,7 +58,7 @@ sama dengan memanggil
     
     
     
-Aturan ini berlaku sama juga untuk request kosong  atau dalam hal ini maka halaman **home/beranda** sama dengan
+Aturan ini berlaku sama juga untuk request kosong  atau dalam hal ini maka halaman **home/beranda** sama dengan request
 
 
     ?u=content/index
@@ -72,7 +72,7 @@ Aturan ini berlaku sama juga untuk request kosong  atau dalam hal ini maka halam
 
 Setiap controller akan mempunyai kumpulan file template dalam direktori `tpl/controller` 
 
-Setiap method defaultnya akan mempunyai template `tpl/controller/method.html`
+Setiap method menunjuk file `tpl/controller/method.html` sebagai templatnya
 
 Halaman **home/beranda** defaultnya adalah `Content->index()`, 
 maka template untuk halaman **home/beranda** adalah `tpl/content/index.html`

@@ -1,9 +1,15 @@
-###  KELAS-KELAS DASAR
+###  KELAS PARENT 
+
+
+Parent untuk controller adalah `BaseCtrl`
+Parent untuk model yang memakai tabel adalah `Model` dan `Model` mempunyai parent `DbSQL`
+Sedangkan kelas perender template adalah `View`
+Semuanya terletak dalam folder `core/`
 
 
 #### CONTROLLER
 
-File controller diletakkan dalam `ctrl/`
+File-file controller diletakkan dalam folder `ctrl/`
 
 Apabila controller diturunkan dari `BaseCtrl` maka akan didapat properti-properti
 yang telah di inisialisasi yaitu
@@ -533,7 +539,7 @@ Dari template sudah ada variabel yang siap dipakai yaitu
 
 - `{$hta}` atau `?=u` dibutuhkan bila nanti mengunakan pretty_url htaccess.
 
-- `{$baseurl}` atau `?u=nama_kelas/nama_method`
+- `{$baseurl}` atau `?u=nama_kelas/nama_method` 
 
 - `{$url}` atau sama dengan `$_GET['u']` 
 

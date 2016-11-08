@@ -1,18 +1,44 @@
 ###  PROTOTYPE
 
+#### KONSEP DASAR
+
+Berita, mempunyai struktur yang umum dipakai adalah
+
+- Pengirim
+- Tanggal dan jam berita dirilis.
+- Foto yang berkaitan dengan berita
+- Judul Berita.
+- Isi berita, yang dibagi menjadi dua yaitu isi lengkap berita dan ekserp, yang dapat berupa alinea pertama atau abstraksi.
+
+Macam macam berita
+
+- Foto Utama dan tulisan
+- Video
+- Fragmen atau berseri, ini biasanya adalah  liputan khusus
+- Profil atau fitur tentang sesuatu ( Tokoh, ResepMasakan dll.
+
+
+Sedangkan berita dilihat dari alurnya adalah
+
+- Dikirim oleh reporter/kontributor/koresponden
+- Evaluasi oleh redaksi dan penyuntingan kata/bahasa
+- Translate bila rilis akan di jadikan multi lingual ( opsional untuk pengembangan )
+
+
 
 #### BAGAN ALUR WEB
 
 
 
-![Bagan-alur-web](img/bagan-alur-web.jpg)
+[![img/bagan-alur-web.jpg](img/bagan-alur-web.jpg)](img/bagan-alur-web.jpg)
 
 
 **Deskripsi**
 
-Alur web dibagi menjadi 4 Grup Controller yaitu 
 
-1. Reporter (file `ctrl/reporter.php`) 
+Alur web dibagi menjadi 6 Grup Controller yaitu 
+
+1. Reporter (file `ctrl/reporter.php`), atau dalam bagan debagai alur ** `A` **
 
     - Reporter adalah halaman untuk contributor/reporter/jurnalis atau 
     siapa saja yang ingin mengirimkan berita.
@@ -24,10 +50,9 @@ Alur web dibagi menjadi 4 Grup Controller yaitu
     mailbox sedapat mungkin mirip, untuk kemudahan para jurnalis yang biasa 
     berkirim berita melalui email.
     
-    
 
 
-2. Redaktur/Admin (file `ctrl/redaktur.php`)
+2. Redaktur/Admin (file `ctrl/redaktur.php`) atau dalam bagan sebagai alur ** `B` **
 
     - Redaktur / Admin adalah halama-halaman untuk redaktur, 
     pimred, ulama/staf ahli, editor dan bagian tatausaha. 
@@ -38,7 +63,7 @@ Alur web dibagi menjadi 4 Grup Controller yaitu
     
     - Level 1 atau pimred yang mempunyai wewenang membuat/mengubah rubrik/menu
 
-3. Content (`ctrl/content.php`)
+3. Content (`ctrl/content.php`) dalam bagan sebagai alur ** `C` **
 
     - Content adalah controller default
     
@@ -58,7 +83,7 @@ Alur web dibagi menjadi 4 Grup Controller yaitu
     Ini penting untuk mengikat reporter mengirimkan berita yang benar-benar dapat dipertanggung-jawabkan.
     
     
-4. TataUsaha (`ctrl/tatausaha`)
+4. TataUsaha (`ctrl/tatausaha.php`) dalam bagan sebagai alur ** `D` **
 
     - Ini adalah halaman untuk bagian tatausaha, halaman ini berisi statistik dan 
     pemeritahuan pembayaran, termasuk traffic untuk rilis berita.
@@ -67,11 +92,49 @@ Alur web dibagi menjadi 4 Grup Controller yaitu
     daripada dikirim dalam controller. Selain itu agar compatible kalau nantinya dikembangkan 
     untuk API maupun feeder.
 
+
+5. Api (`ctrl/api.php`)
+
+    - ini adalah controller untuk API dengan format json, xml dan sebuah feeder (xml) untuk rss.
+    - halaman ini tidak terlihat
+
+6. Asset (`ctrl/asset.php`)
+    
+    - Link ke file media baik untuk link ekternal maupun internal( image/).
+    - halaman ini tidak terlihat
+    
+7. Ads ( `ctrl/ads.php`)
+
+    - Antarmuka untuk trafic 
+    - halaman ini tidak terlihat
+    
+    
+Untuk no. 5 sampai 7 tidak tampak dalam bagan karena tidak mempunyai interface, meskipun demikian ketiga alur tersebut
+mempunyai template.
+
+
+Setiap kelompok kecuali Content akan menjadi subdomain misalnya untuk `www.seruji.com` 
+maka akan mempunyai sebuah domain dengan 7 buah subdomain yaitu
+
+- www.seruji.com  untuk  `Content`
+- reporter.seruji.com untuk `Reporter`
+- redaktur.seruji untuk redaktur
+- tatausaha.seruji untuk tatausaha
+- api.seruji.com untuk API 
+- asset.seruji.com
+- ads.seruji.com
+
+
+Dalam hubungan dengan template, maka masing masing alur tersebut mempunyai beberapa template misalnya controller ** `A` **
+mempunyai template ** `A1` ** .. ** `A14` **
+
+Dalam hubungan dengan method, template diatas merupakan interface untuk sebuah method.
+
 .
 
 **Kelompok Kerja bisa dibagi dengan opsi**
  
-- kerja mengikuti per-controller tersebut, atau
+- kerja mengikuti per-controller tersebut.
 - pembagian file perfolder misalnya `ctrl` dengan `tpl` atau webdevelop dan webdesign 
 - pembagian tugas `developer`, `bug tester`, `security tester` dan `dokumentasi`
 
@@ -90,7 +153,7 @@ Berikut ini adalah prototype database Media Umat
 .
 
 
-![bagan-database](img/bagan-database.jpg)
+[![img/bagan-database.jpg](img/bagan-database.jpg)](img/bagan-database.jpg)
     
 .
 
@@ -311,20 +374,28 @@ sub template diatas dapat dipanggil melalui javascript/jquery.ajax atau lainnya
 
 #### VARIABLE YANG TELAH DITENTUKAN UNTUK TEMPLATE
 
+
 Variabel ditulis mengikuti sintaks dari [SMARTY](http://smarty.net) yaitu 
 diapit dengan kurawal tanpa spasi atau `{..}`.
 
+        
+
+Gunakan Variabel request yang ditetapkan dibawah ini, untuk menghindari kesalahan yang mungkin 
+terjadi akibat pada saat pembuatan dengan saat sudah berada dalam webhosting.
+
+
 Variabel yang telah ditetapkan untuk yaitu :
 
-- `{$hta}` sama dengan `index.php?u=` . Jangan menulis `index.php?u=` 
-secara langsung dalam template, lebih baik gunakan variabel ini. 
-Untuk memudahkan perpindahan dengan **.htaccess** dan migrasi ke subdomain.
+- `{$hta}` sama dengan `index.php?u=` .
 
 - `{$url}` akan menunjuk pada alamat itu sendiri.
 
         
 - `{$baseurl}` akan menunjuk pada controllernya.
-misalnya pada url browser tertulis `index.php?u=reporter/login` maka 
+
+
+misalnya untuk  `index.php?u=reporter/login` maka 
+
 
         <form action="{$hta}reporter/login" method="post">
         
@@ -343,7 +414,7 @@ misalnya pada url browser tertulis `index.php?u=reporter/login` maka
 - `{$sitename}` sama dengan $_SERVER['SERVER_NAME']
         
 
-- `{$image}` untuk menampilkan alamat image atau `index.php?u=image`.
+- `{$image}` untuk menampilkan alamat image atau `index.php?u=asset/image`.
 misalnya menampilkan background dengan warna biru, 240px ekstensi jpg
 
         <img src="{$image}/background/blue/small/jpg">
