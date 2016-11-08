@@ -54,7 +54,6 @@ if (ini_get('register_globals')) {
 /* 
     routing 
     default "content/index" atau yang ditentukan dengan $route
-*/
 $default_control=empty($route)?'content':strtolower($route);
 $default_method='index';
 
@@ -62,9 +61,9 @@ $default_method='index';
 $_get='';
 if(isset($_GET['u'])) $_get=strtolower($_GET['u']);
 
+*/
 /*
 koreksi $_GET
-*/
 $_get=str_replace('-','_',$_get);
 $_get=str_replace(' ','_',$_get);
 $_get=str_replace('//','/',$_get);
@@ -94,11 +93,17 @@ if(method_exists($ctrl,$mtd)){
 $_baseurl=$ctrl==$default_control?'':$ctrl;
 
 $ctrl=ucfirst($ctrl);
-
+*/
+$router=new Router($route);
+$ctr=ucfirst($router->controller);
+$mtd=$router->method;
+/*
+echo $ctr.'->'.$mtd;
+*/
 if(substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')){
     ob_start("ob_gzhandler");
 }else{
     ob_start();
 }
-$object=new $ctrl;
+$object=new $ctr;
 $object->$mtd();

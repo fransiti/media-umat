@@ -1,12 +1,18 @@
 <?php
 class BaseCtrl{
+    /*
+    diganti dengan class global $router 
     protected $_url;
-    protected $_view;
-    protected $_render;
     protected $_qry=array();
     protected $_hta='';
     protected $_domain;
-    protected $_subdomain;
+    */
+    
+    protected $_router;
+    protected $_render;
+    protected $_view;
+    protected $_url;
+    protected $_list=array();
     protected $_header=array(
         'title'=>'title',
         'subtitle'=>'subtitle',
@@ -17,39 +23,47 @@ class BaseCtrl{
     );
     
     function __construct(){
+        global $router;
+        global $_hta;
+        /*
         global $_get;
         global $_qry;
-        global $_hta;
         global $_baseurl;
-        
-        $this->setUrl($_get);
-        unset($_get);
-        
-        $this->_baseurl=$_baseurl;
-        unset($_baseurl);
-        
-        
-        $this->_qry[0]='';
-        if(!empty($_qry)) $this->_qry=$_qry;
-        unset($_qry);
+        */
+        $this->_router=$router;
+        unset($router);
         
         $this->_hta=$_hta;
         unset($_hta);
+        
+        $this->setUrl($this->_router->url);
+        $this->_baseurl = $this->_router->not_subdomain?
+            /*
+            ?u=controller/
+            */
+            $this->_hta.$this->_router->controller.'/' :
+            /*
+            controller.domain.com/?=
+            */
+            $this->_router->controller.'.'.$this->_router->domain.'/'.$this->_hta;
         
         $this->_render=true;
         $this->_post=new Post;
         $this->_view=new View();
     }
-        
+    
+    
     function __destruct(){
         if($this->_render){
             if(!empty($this->_baseurl))
-                $this->_baseurl=$this->_hta.$this->_baseurl;
+                
                 $this->_url=$this->_hta.$this->_url;
                 $this->_view->set('hta',$this->_hta);
                 $this->_view->set('url',$this->_url);
                 $this->_view->set('baseurl',$this->_baseurl);
-                $this->_view->set('qry',$this->_qry);
+            
+            
+                
                 $this->_view->set('header',$this->_header);
                 $this->_view->set('meta',$this->_meta);
                 $this->_view->set('image',$this->_hta.'image');
@@ -75,9 +89,10 @@ class BaseCtrl{
     
     protected function redir($to_url=null){
         $to_url=strtolower($to_url);
-        header('location: '.$this->_hta.$to_url);
+        str_replace($this->_route->controller.'/',$to_url);
+        header('location: '.$this->_baseurl.$to_url);
     }
-    
+        
     function setUrl($url){
         $this->_url=$this->_hta.strtolower($url);
     }
@@ -129,12 +144,15 @@ HERE;
     }
     /*
     hanya untuk test
-    */
     
     function server(){
         $this->_render=0;
+        echo '<pre><code>';
         print_r($_SERVER);
+        echo '</code></pre>';
     }
+    */
+    
 /* end Content */    
     
 }
