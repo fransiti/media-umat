@@ -14,10 +14,17 @@
                             <th>
                                 <a href="#" data-toggle="modal" data-target="#draft-dialog" class="btn btn-primary">Baru</a>
                             </th>
+                            
                         </tr>
                     </thead>
                     <tbody>
-
+                        {foreach $draft as $key=>$val}
+                        <tr>
+                            <td>{$val['tgl']}</td>
+                            <td>{$val['judul']}</td>
+                            <td>{$status[{$val['status']}]}</td>
+                        </tr>
+                        {/foreach}
                     </tbody>
                 </table>
             </div>
