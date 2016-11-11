@@ -4,12 +4,9 @@ class View{
     protected $_tpl;
     protected $_var=array();
     
-    function __construct(){
-        global $mtd;
-        global $ctrl;
-        $this->setDir($ctrl);
-        $this->setTpl($mtd);
+    function __construct(){   
     }
+    
     function setDir($dir){
         $this->_dir='tpl'.DS.strtolower($dir);
     }

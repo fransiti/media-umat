@@ -97,13 +97,12 @@ $ctrl=ucfirst($ctrl);
 $router=new Router($route);
 $ctr=ucfirst($router->controller);
 $mtd=$router->method;
-/*
-echo $ctr.'->'.$mtd;
-*/
+
 if(substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')){
     ob_start("ob_gzhandler");
 }else{
     ob_start();
 }
+
 $object=new $ctr;
 $object->$mtd();

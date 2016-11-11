@@ -1,0 +1,66 @@
+{include file="header.html"} {include file="sidebar.html"}
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>Daftar Draft</h3>
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Tgl</th>
+                            <th>Judul</th>
+                            <th>Status</th>
+
+                            <th>
+                                <a href="#" data-toggle="modal" data-target="#draft-dialog" class="btn btn-primary">Baru</a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="draft-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form name="draft-form" role="form" action="{$baseurl}" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Draft Baru</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="judul">Judul</label>
+                        <input type="text" name="judul" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="judul">Rubrik</label>
+                        <select name="tipe" class="form-control">
+                            {foreach $tipe as $key=>$val}
+                            <option value="{$key}">{$val}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" name="submit" value="submit" class="btn btn-primary">Ok</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+
+{include file="footer.html"}

@@ -36,41 +36,72 @@ class BaseCtrl{
         $this->_hta=$_hta;
         unset($_hta);
         
-        $this->setUrl($this->_router->url);
-        $this->_baseurl = $this->_router->not_subdomain?
-            /*
-            ?u=controller/
-            */
-            $this->_hta.$this->_router->controller.'/' :
-            /*
-            controller.domain.com/?=
-            */
-            $this->_router->controller.'.'.$this->_router->domain.'/'.$this->_hta;
+        $this->_qry=$this->_router->qry;
         
-        $this->_render=true;
+        $this->setUrl($this->_router->url);
+        
+        $this->_baseurl =  
+            $this->subDomainVar($this->_router->controller);
+        
+        /*
+        inisialisasi post
+        */
         $this->_post=new Post;
+        
+        
+        /*
+        inisialisasi template
+        */
+        $this->_render=true;
         $this->_view=new View();
+        $this->_view->setDir($this->_router->controller);
+        $this->_view->setTpl($this->_router->method);
     }
     
     
     function __destruct(){
         if($this->_render){
-            if(!empty($this->_baseurl))
-                
-                $this->_url=$this->_hta.$this->_url;
-                $this->_view->set('hta',$this->_hta);
-                $this->_view->set('url',$this->_url);
-                $this->_view->set('baseurl',$this->_baseurl);
+            if(class_exists('Asset')){
+                $array=$this->getAllMethods('Asset');
+                foreach($array as $val) 
+                    $this->_view->set(
+                        $val,$this->subDomainVar('Asset',$val)
+                );
+            }
+            $this->_view->set('hta',$this->_hta);
+            $this->_view->set('url',$this->_url);
+            $this->_view->set('baseurl',$this->_baseurl);
+            $this->_view->set('header',$this->_header);
             
+            $this->_view->set('meta',$this->_meta);
             
-                
-                $this->_view->set('header',$this->_header);
-                $this->_view->set('meta',$this->_meta);
-                $this->_view->set('image',$this->_hta.'image');
-                $this->_view->render();
+            $this->_view->render();
         }
     }
-
+    protected function getAllMethods($class){
+        $_this = get_class_methods($class);
+        if($parent_class = get_parent_class($class)){
+            $_parent = get_class_methods($parent_class);
+            $_dif = array_diff($_this, $_parent);
+            return $_dif;
+        }
+        return $_this;
+    }
+    protected function subDomainVar($ctrl,$mtd=''){
+        $ctrl=strtolower($ctrl);
+        return $this->_router->not_subdomain ?
+            /*
+            ?u=controller/
+            */
+            $this->_hta.$ctrl.'/'.$mtd :
+            /*
+            controller.domain.com/?=
+            */
+            'http://'.$ctrl.'.'.$this->_router->domain.'/'.$this->_hta.$mtd;
+    }
+        
+            
+        
     protected function pagination($cur_page,$count_rec,$pagename=null){
         global $record_perpage;
         if(empty($pagename)) $pagename='pagination'; 
@@ -142,16 +173,6 @@ class BaseCtrl{
 HERE;
         echo $out;
     }
-    /*
-    hanya untuk test
-    
-    function server(){
-        $this->_render=0;
-        echo '<pre><code>';
-        print_r($_SERVER);
-        echo '</code></pre>';
-    }
-    */
     
 /* end Content */    
     

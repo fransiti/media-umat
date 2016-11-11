@@ -346,7 +346,7 @@ class Img{
             $ext='jpg';  
             $s='data:image/jpeg;base64,';
         }
-        $file='i'.uniqid().'.'.$ext;
+        $file=uniqid().'.'.$ext;
         $img=str_replace($s,'',$img);
         $img=str_replace(' ','+',$img);
         $data=base64_decode($img);

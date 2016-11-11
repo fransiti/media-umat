@@ -34,7 +34,7 @@ class Session{
 	}
 
 	/* mengambil session_id */
-	function Id(){
+	function id(){
 		return session_id();
 	}
     function newId(){
