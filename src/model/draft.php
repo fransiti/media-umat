@@ -16,16 +16,17 @@ class Draft extends Model{
         'tipe' =>'INT',
         'judul'=>'VARCHAR(255)',
         'url'=>'VARCHAR(255)',
-        'status'=>'INT(1)',
+        'status'=>'INT(1) DEFAULT 1',
         'seq'=>'INT(2) DEFAULT 0',
         'tipe'=>'INT(1)',
         'ekserp'=>'TEXT',
         'isi'=>'text',
     );
-    public $status=array(
+     
+    public $statuskode = array(
         '1'=>'Saved',
         '2'=>'Submitted',
-        '3'=>'Reject : Edit',
+        '3'=>'Reject : re Edit',
         '4'=>'Reject : Content Warning',
         '5'=>'Reject : Others',
     );
