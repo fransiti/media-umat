@@ -8,7 +8,7 @@ class View{
     }
     
     function setDir($dir){
-        $this->_dir='tpl'.DS.strtolower($dir);
+        $this->_dir=strtolower($dir);
     }
     function getDir(){
         return $this->_dir;

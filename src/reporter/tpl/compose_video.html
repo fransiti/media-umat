@@ -1,0 +1,173 @@
+{include file="header.html"} {include file="sidebar.html"}
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>Foto</h3>
+                <small>Ini adalah Form untuk mengirimkan Berita Untaian Foto</small>
+                <hr>
+                <form name="form" class="form" role="form" action="{$url}" method="post">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="judul">Judul</label>
+                                <input type="text" name="judul" value="{$draft['judul']}" class="form-control">
+                                <input type="hidden" name="id" value="{$draft['id']}">
+                            </div>
+                            <div class="form-group">
+                                <label for="judul">Rubrik</label>
+                                <select name="rubrik_id" class="form-control">
+                                    {foreach $rubrik as $key=>$val}
+                                    
+                                    {if empty($val['submenu'])}
+                                        <option value="{$val['id']}" {if $val['id']==$draft['rubrik_id']}selected="selected"{/if}>
+                                            {$val['nama']}
+                                        </option>
+                                    {else}
+                                    <optgroup label="{$val['nama']}">
+                                        
+                                        {foreach $val['submenu'] as $_key =>$_val}
+                                        <option value="$_val['id']"> 
+                                            &nbsp;&nbsp;&rsaquo;{$_val['nama']} 
+                                        </option>
+                                        {/foreach}
+                                        
+                                    </optgroup>    
+                                    {/if}
+                                    
+                                    {/foreach}
+                                    
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="judul">Ekserp&nbsp;&nbsp;<small class="text-primary">*diisi alinea pertama atau abstraksi</small></label>
+                                <textarea name="ekserp" class="form-control" rows="5">{$draft['ekserp']}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                        <hr>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="text-left">Video</label>
+                                </div>    
+                                <div class="col-md-12 text-right" style="padding-bottom:50px;">
+                                    <button type="button" class="text-right btn btn-success" data-toggle="modal" data-target="#video-dialog">Tambah</button>
+                                </div>
+                                <div class="col-md-12" id="video-gallery">
+                                    
+                                    {foreach $sub_draft as $key=>$val}
+                                     <div class="form-group col-md-3">
+                                         {$video->youtube($val['url'])}
+                                         
+                                         <input type="hidden" name="ids[]" value="{$val['id']}">
+                                         <br>
+                                         <button type="button" class="btn btn-danger btn-delete" data-id="{$val['id']}">Hapus</button>
+                                    </div>
+                                    {/foreach}
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="col-md-12 text-right">
+                            <a href="{$baseurl}" class="btn btn-default">Kembali ke Index</a> 
+                            <button type="submit" name="submit" value="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </div>    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ava modal dialog ava -->
+<style>
+    .cropit-preview {
+        background-color: #f8f8f8;
+        background-size: cover;
+        border: 1px solid #ccc;
+        width: 240px;
+        height:180px;
+        cursor: grabbing;
+    }
+
+    .cropit-preview-background {
+        opacity: .2;
+        cursor: auto;
+      }
+    
+    .croppit-preview-wrapper{
+        padding :30px;
+    }    
+    .icon-bg{
+        font-size: 7em;
+        left:0;
+        top:0;
+        padding:0;
+    }
+</style>
+<!-- Modal -->
+<div class="modal fade" id="video-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Video</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="judul">Youtube</label>
+                        <input id='url' type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary btn-add">Ok</button>
+                </div>
+            
+        </div>
+
+    </div>
+</div>
+
+
+
+<script>
+    $(function(){
+        $('.btn-add').click( function(e){
+            e.preventDefault();
+            var u=$('#url').val();
+            $.ajax({
+                type:'post',
+                url:'{$baseurl}get_video',
+                data:{
+                    vid_url:u,
+                },
+                success:function(d){
+                    var f='<div class="form-group col-md-3">'+d+
+                        '<input type="hidden" name="ids[]" value="">'+
+                        '<input type="hidden" name="urls[]" value="'+u+'"><br>'+
+                        '<br>'+
+                        '<button type="button" class="btn btn-danger btn-delete">Hapus</button>'+
+                        '</div>';
+                    $('#video-gallery').append(f);
+                    $('#video-dialog').modal('hide');
+                },
+            });
+        });
+        $('div').on('click','.btn-delete', function(e){
+            e.preventDefault();
+            var i=$(this).attr('data-id');
+            $.ajax({
+                type:'post',
+                url:'{$baseurl}delete_video',
+                data:{
+                    fid:i,
+                    submit:'submit'
+                }
+            });
+            $(this).closest('div').remove(); 
+        });
+    });
+</script>    
+{include file="footer.html"}

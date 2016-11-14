@@ -94,10 +94,17 @@ $_baseurl=$ctrl==$default_control?'':$ctrl;
 
 $ctrl=ucfirst($ctrl);
 */
+
 $router=new Router($route);
 $ctr=ucfirst($router->controller);
 $mtd=$router->method;
 
+/*
+echo '<pre>';
+print_r($router);
+echo '</pre>';
+var_dump($router->not_subdomain);
+*/
 if(substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')){
     ob_start("ob_gzhandler");
 }else{
@@ -106,3 +113,5 @@ if(substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')){
 
 $object=new $ctr;
 $object->$mtd();
+
+
