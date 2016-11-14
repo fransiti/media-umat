@@ -55,6 +55,8 @@ class BaseCtrl{
         $this->_render=true;
         $this->_view=new View();
         $this->_view->setDir($this->_router->controller);
+        
+
         $this->_view->setTpl($this->_router->method);
     }
     
@@ -72,9 +74,13 @@ class BaseCtrl{
             $this->_view->set('url',$this->_url);
             $this->_view->set('baseurl',$this->_baseurl);
             $this->_view->set('header',$this->_header);
-            
             $this->_view->set('meta',$this->_meta);
             
+            
+            $tpldir=$this->_router->not_subdomain?'':'../';
+            $tpldir.=$this->_view->getDir().'/';
+            $array=array('css','img','fonts','js');
+            foreach($array as $key)$this->_view->set($key,$tpldir.$key);
             $this->_view->render();
         }
     }

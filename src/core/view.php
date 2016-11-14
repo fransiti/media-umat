@@ -10,6 +10,9 @@ class View{
     function setDir($dir){
         $this->_dir='tpl'.DS.strtolower($dir);
     }
+    function getDir(){
+        return $this->_dir;
+    }
     function setTpl($file){
         $this->_tpl=strtolower($file).'.html';
     }
@@ -33,8 +36,6 @@ class View{
         $smt->setConfigDir(ROOT_DIR.DS.'tmp'.DS.'cfg');
         $smt->setCacheDir(ROOT_DIR.DS.'tmp'.DS.'cache');
         $smt->setCompileDir(ROOT_DIR.DS.'tmp'.DS.'cpl' );
-        $array=array('css','img','fonts','js');
-        foreach($array as $key)  $smt->assign($key,$this->_dir.DS.$key);
         foreach($this->_var as $key=>$val) $smt->assign($key,$val);
         $out=$smt->fetch($this->_tpl);
         unset($smt);

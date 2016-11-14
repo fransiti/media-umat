@@ -15,13 +15,18 @@ class Rubrik extends Model{
             'nama'=>'Olah Raga',
         ),
     );
+    /*
+    tipe berita
+    dan fragmen berita masuk dalam kolom yang sama
+    */
     public $tipe = array(
         '1'=>'Berita',
         '2'=>'Foto',
         '3'=>'Video',
+    );
+    public $fragmentipe = array(
         '4'=>'Laporan Khusus',
         '5'=>'Profile',
-    );
-
+        );
     /* end of rubrik */
 }

@@ -24,8 +24,6 @@ class Reporter extends BaseCtrl{
         if(!$this->_login) $this->redir('login');
         $this->_view->set('profile_nama',$this->session->get('ctrprofile_nama'));
         $this->_view->set('profile_ava',$this->session->get('ctrprofile_ava'));
-        
-        
     }
         
         
@@ -116,12 +114,16 @@ class Reporter extends BaseCtrl{
     function profile(){
         $this->need_login();
         $this->addModel('ctrprofile');
-        $pr_id=$this->session->get('profile_id');
+        $pr_id=$this->session->get('ctrprofile_id');
         if($this->_post->submitted()){
             $this->ctrprofile->add($this->_post->all());
             $this->ctrprofile->save($pr_id);
+            $this->session->set('ctrprofile_ava',$this->_post->get('ava'));
+            $this->session->set('ctrprofile_nama',$this->_post->get('nama'));
+            $this->redir();
+            
         };
-        $this->set('profile',$this->ctrprofile->select($pr_id));
+        $this->_view->set('profile',$this->ctrprofile->select($pr_id));
     }
         
             
@@ -132,24 +134,24 @@ class Reporter extends BaseCtrl{
         pwd
     alur A3-b    
     */
-    function access(){
+    function account(){
         $this->need_login();
         $this->addModel('ctraccess');
         $id=$this->session->get('id');
-        if($this->_post->submitted){
+        if($this->_post->submitted()){
             $this->ctraccess->add($this->_post->all());
             $this->ctraccess->save($id);
             $this->session->close();
-            $this->redir('login');
+            $this->redir();
         }
-        $this->_view->set('access',$this->ctraccess->select($id));
+        $this->_view->set('account',$this->ctraccess->select($id));
     }
         
     /*
-    ava_post
+    
     karena ajax post tidak mengijinkan cross domain
     maka terpaksa harus membuat even tambahan
-    untuk ajax post ava
+    untuk ajax post ava dan post image
     masalah ini telah membuat pusing sehari 
     
     */
@@ -202,6 +204,7 @@ class Reporter extends BaseCtrl{
     melakukan login, berisi daftar draft miliknya
     alur A5
     */
+
     function index(){
         $this->need_login();
         $this->addModel('draft');
@@ -210,70 +213,228 @@ class Reporter extends BaseCtrl{
             $this->draft->add($this->_post->all());
             $this->draft->jam='CURTIME()';
             $this->draft->tgl='CURDATE()';
+            $this->draft->status='1';
             $this->draft->ctrprofile_id=$this->session->get('ctrprofile_id');
             $id=$this->draft->save();
             $this->redir('compose/'.$id);
         }
         
-        $this->draft->andWhere(
-            'ctrprofile_id', $this->session->get('ctrprofile_id')
-        );
+        $this->draft->andWhere( 'ctrprofile_id', 
+                                       $this->session->get('ctrprofile_id') );
         $this->draft->andWhere('draft_id','0');
         $this->_view->set('draft',$this->draft->select());
         $this->_view->set('tipe',$this->rubrik->tipe);
+        $this->_view->set('status',$this->draft->statuskode);
     }
+
         
 
+  /*
+  tipe compose
+  model/rubrik.php
+  
+    public $tipe = array(
+        '1'=>'Berita',
+        '2'=>'Foto',
+        '3'=>'Video',
+        '4'=>'Laporan Khusus',
+        '5'=>'Profile',
+    );
+*/  
+    /*
+    handle
+    tipe berita(1)
+    */
+    protected function compose_berita(){
+        if($this->_post->submitted()){
+            $this->draft->add($this->_post->all());
+            $this->draft->save();
+            $this->redir();
+        }
+        $this->_view->setTpl('compose_berita');
+    }
+    /*
+    handle
+    tipe foto(2)
+    */
+    protected function compose_foto($draft_id){
+        if($this->_post->submitted()){
+            $urls=$this->_post->get('urls');
+            $ekserps=$this->_post->get('ekserps');
+            $ids=$this->_post->get('ids');
+            foreach($urls as $key=>$val){
+                if(!empty($ekserps[$key]))
+                    $this->draft->colVal('ekserp',$ekserps[$key]);
+                if(!empty($ids[$key]))
+                    $this->draft->id=$ids[$key];
+                $this->draft->tgl='CURDATE()';
+                $this->draft->jam='CURTIME()';
+                $this->draft->colVal('url',$val);
+                $this->draft->draft_id=$draft_id;
+                $this->draft->ctrprofile_id=$this->session->get('ctrprofile_id');
+                $this->draft->save();
+            }
+            $this->draft->add($this->_post->all());
+            $this->draft->save($draft_id);
+            $this->redir();
+        }
+        $this->draft->andWhere('draft_id',$draft_id);
+        $this->_view->set('sub_draft',$this->draft->select());
+        $this->_view->setTpl('compose_foto');
+    }
     
+    /*
+    ajax handle
+    hapus foto
+    */
+    function delete_foto(){
+        $this->_render=0;
+        if($this->_post->submitted()){
+            $id=$this->_post->get('fid');
+            if(!empty($id)){
+                $this->addModel('draft');
+                $this->draft->delete($id);
+            }
+            $fname=$this->_post->get('fname');
+            if(!empty($fname)){
+                $img=new Img;
+                $img->delete($fname);
+            }
+            echo $fname.'-'.$id;
+        }
+        echo '<br>1';
+    }    
+    /*
+    handle
+    video
+    */
+    protected function compose_video($draft_id,$tipe){
+        if($this->_post->submitted()){
+            $urls=$this->_post->get('urls');
+            $ids=$this->_post->get('ids');
+            foreach($urls as $key=>$val){
+                if(!empty($ids[$key]))
+                    $this->draft->id=$ids[$key];
+                $this->draft->tgl='CURDATE()';
+                $this->draft->jam='CURTIME()';
+                $this->draft->colVal('url',$val);
+                $this->draft->draft_id=$draft_id;
+                $this->draft->ctrprofile_id=$this->session->get('ctrprofile_id');
+                $this->draft->save();
+            }
+            $this->draft->add($this->_post->all());
+            $this->draft->save($draft_id);
+            $this->redir();
+        }
+        $vid=new Video;
+        $this->draft->andWhere('draft_id',$draft_id);
+        $this->_view->set('sub_draft',$this->draft->select());
+        $this->_view->set('video',$vid);
+        $this->_view->setTpl('compose_video');
+    }
+    /*
+    ajax
+    parsing youtube untuk 
+    embed
+    */
+    function get_video(){
+        $this->_render=0;
+        if($this->_post->submitted('vid_url')){
+            $url=$this->_post->get('vid_url');
+            $vid=new Video;
+            echo $vid->youtube($url);
+        }
+    }
+        
+    /*
+    ajax handle
+    hapus url video
+    */
+    function delete_video(){
+        $this->_render=0;
+        if($this->_post->submitted()){
+            $id=$this->_post->get('fid');
+            if(!empty($id)){
+                $this->addModel('draft');
+                $this->draft->delete($id);
+            }
+            echo 'done';
+        }
+        echo '<br>1';
+    }    
+        
     function compose(){
         /* draft baru */
         $this->need_login();
         $this->addModel('rubrik');
         $this->addModel('draft');
-        /*
-        if($this->_post->submitted()){
-            $this->draft->add($this->_post->all());
-            $this->draft->tgl='CURDATE()';
-            $this->draft->jam='CURTIME()';
-            $this->redir();
-            
-        }*/
         $this->rubrik->orderBy('id','asc');
-        $this->_view->set('rubrik',$this->rubrik->select());
+        
+        /* 
+        prevent id kosong
+        */
         if(empty($this->_qry[0])) $this->redir();
         if(!is_numeric($this->_qry[0])) $this->redir();
+        
         $draft=$this->draft->select($this->_qry[0]);
         $this->_view->set('draft',$draft);
-        $this->draft->andWhere('draft_id',$draft['id']);
-        $this->_view->set('sub_draft',$this->draft->select());
-        $this->_view->setTpl('compose_'.$draft['tipe']);
+        $this->_view->set('rubrik',$this->rubrik->select());
+        
+        switch ($draft['tipe']){
+            case '2':$this->compose_foto($draft['id']);
+                break;
+            case '3':$this->compose_video($draft['id']);
+                break;
+            default :$this->compose_berita();
+                break;
+        } 
     }
     
-    function submit(){
         
-    }
-    function release(){
         
-    }
-        /*
-        $this->draft->colVal('judul','Untitled');
-        $this->draft->tgl='CURDATE()';
-        $this->draft->jam='CURTIME()';
-        /* record baru kosong */
-        /* 
-        $tpl='compose_';
-        $tipe=$this->rubrik->tipe;
-        $dr_tipe=empty($this->_qry[0])?'1':$this->_qry[0];
-        if(!is_numeric($dr_tipe)) $dr_tipe='1';
-        if($dr_tipe>0 && $dr_tipe<=count($tipe)){
-            $tpl.=$dr_tipe;
+    function compose_delete(){
+        $this->need_login();
+        if($this->_post->submitted()){
+            $this->addModel('draft');
+            $this->draft->andWhere('draft_id',$this->_post->get('id'));
+            $res=$this->draft->select();
+            if(!empty($res)){
+                foreach($res as $key=>$val)
+                    $this->draft->delete($val['id']);
+            }
+            $this->draft->delete($this->_post->get('id'));
         }
-        
-        $this->_view->set('tipe',$tipe);
-        $this->_view->setTpl($tpl);
+        $this->redir();
     }
-    */    
-
+        
+        
+    
+    
+    function submit(){
+        $this->need_login();
+        if(!empty($this->_qry[0])&&is_numeric($this->_qry[0])){
+            $this->addModel('draft');
+            $this->draft->colVal('status',2);
+            $this->draft->save($this->_qry[0]);
+        }
+        $this->redir();
+    }
+        
+    function release(){
+        $this->need_login();
+        if(!isset($this->_qry[0]))$this->_qry[0]='';
+        if(!isset($this->_qry[1]))$this->_qry[1]='';
+        $this->addModel('rilis');
+        $this->addModel('rilistraffic');
+        $this->rilis->andWhere('ctrprofile_id',$this->session->get('ctrprofile_id'));
+        $this->rilis->selectMonth($this->_qry[0]);
+        $this->rilis->selectYear($this->_qry[1]);
+        $this->rilis->leftJoin($this->rilistraffic->tableName(),
+                               $this->rilistraffic->colNames(),
+                              true);
+        $this->_view->set('rilis', $this->rilis->select());
+        $this->_view->set('total',$this->rilis->countRec());
+    }
         
 /* akhir Reporter */        
 }

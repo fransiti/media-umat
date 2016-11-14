@@ -113,7 +113,6 @@ class Router{
             if(method_exists($ctr,$qry[0]))
                 $this->method=array_shift($qry);
         }
-        
         $this->qry=$qry;    
     }   
 }

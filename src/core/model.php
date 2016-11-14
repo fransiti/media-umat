@@ -220,7 +220,14 @@ QRY;
       $s.=' '.$con.' '.$val;
       array_push($this->_and,$s);
    }
-
+   function andQry($custom_qry){
+       array_push($this->_and,$custom_qry);
+   }
+   function orQry($custom_qry){
+       array_push($this->_or,$custom_qry);
+   }
+       
+    
    /* metod memasukkan nilai untuk WHERE .. OR */
    function orWhere($col,$val,$con='='){
       $array=explode('.',$col);

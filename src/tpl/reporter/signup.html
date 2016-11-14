@@ -27,9 +27,19 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
-
-                <form class="form" name="form-signup" action="{$url}" method="post">
+            <div class="col-md-10">
+                    <h3>PROFIL</h3>
+                    <p class="text-info"><small><br><em>profil sebagai pengirim berita</em></small></p>
+                    <hr>
+            </div>
+            <div class="clearfix"></div>
+            <form class="form" name="form-signup" action="{$url}" method="post">
+                <div class="col-md-4">
+                    <img src="{$background}/silver/240" id="img-display" class="img-responsive"><br>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cropit-dialog">Foto</button>
+                    <input type="hidden" name="ava" id="ava" value="notfound.png">
+                </div>
+                <div class="col-md-6">
 <!-- {* 
 ctrprofile
     nama
@@ -37,19 +47,7 @@ ctrprofile
     profesi
     tentang
 *} -->
-                    <h3>PROFIL</h3>
-                    <br>
-                    <p class="text-info"><small><em>* ditampilkan sebagai profil pengirim berita</em></small></p>
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <img src="{$background}/silver/240" id="img-display" class="img-responsive">
-                        </div>
-                        <div class="col-md-4">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cropit-dialog">Upload</button>
-                        </div>    
-                    </div>
 
-                    <input type="hidden" name="ava" id="ava" value="notfound.png">
                     <div class="form-group">
                         <label for="nama">Nama</label>
                         <input type="text" name="nama" class="form-control" required="required">
@@ -62,15 +60,24 @@ ctrprofile
                         <label for="tentang">Tentang</label>
                         <textarea name="tentang" class="form-control" row="3" required="required"></textarea>
                     </div>
-                    <hr>
+                </div>    
+
+                    
 <!-- {*
 ctracces
     ctrprofile_id
     email
     pwd    
 *} -->
+                
+                <div class="col-md-10">
+                    <br>
                     <h3>AKUN</h3>
                     <p class="text-info"><small><em>* digunakan untuk melakukan login</em></small></p>
+                    <hr>
+                </div>    
+                <div class="clearfix"></div>
+                <div class="col-md-6 col-md-offset-4">
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="text" name="email" class="form-control" required="required">
@@ -79,14 +86,18 @@ ctracces
                         <label for="pwd">Password</label>
                         <input type="password" name="pwd" class="form-control" required="required">
                     </div>
+                </div>
+                <div class="col-md-12">
+                    <hr>
                     <div class="form-group text-right">
                         <a href="{$baseurl}/login" class="btn btn-default">Batal</a>
                         <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit</button>
                     </div>
+                </div>
                 </form>
             </div>
         </div>
-    </div>
+    
     <!-- /container -->
                         
     

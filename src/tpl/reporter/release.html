@@ -1,0 +1,51 @@
+{include file="header.html"} {include file="sidebar.html"}
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>RILIS BULAN INI</h3>
+                <p><small class="text-info">ini adalah halaman daftar kiriman berita telah dimuat<br>
+                    dan total fee yang diterima oleh pengirim
+                    </small></p>
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Tgl</th>
+                            <th>Judul</th>
+                            <th>Hit</th>
+                            <th>ip Unik</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {foreach $rilis as $key=>$val}
+                        <tr>
+                        <!--    {*
+SELECT rilis.id AS id, 
+       rilis.admprofile_id AS admprofile_id,
+       ..
+       ..
+       
+       rilistraffic.hits AS rilistraffic_hits,
+       rilistraffic.unixip AS rilistraffic_unixip 
+       FROM rilis LEFT JOIN rilistraffic ON rilis.id=rilistraffic.rilis_id 
+       WHERE rilis.ctrprofile_id = '1' ORDER BY rilis.id DESC LIMIT 0,50
+                            *} -->
+                            <td>{$val['tgl']}</td>
+                            <td>{$val['judul']}</td>
+                            <td>{$val['rilistraffic_hits']}</td>
+                            <td>{$val['rilistraffic_unixip']}</td>
+                        </tr>
+                        {/foreach}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+                            
+                            
+
+
+
+{include file="footer.html"}

@@ -11,31 +11,32 @@
     height: 1px;
     margin: 9px 0px;
     overflow: hidden;
-    background-color: #acacac;
+    background-color: #333;
     }
 </style>
     <ul class="sidebar-nav">
         <li class="dropdown">
             <a href="#" data-toggle="dropdown" data-target="#">
-                <img src="{$ava}/{$profile_ava}/32" class="img-circle img-shaddow">&nbsp;&nbsp;Change&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+                <img src="{$ava}/{$profile_ava}/24" class="img-circle img-shaddow">&nbsp;&nbsp;Change&nbsp;&nbsp;&nbsp;<span class="caret"></span>
             </a>
              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                  <li><a href="{$baseurl}profile">Profile</a></li> 
                  <li><a href="{$baseurl}account">Account</a></li>
-                 <li class="nav-divider"></li>
-                 <li><a href="{$baseurl}logout">Logout</a></li>
+                 
             </ul>
             
         </li>
-        <li class="divider">
-            <a href="#">Draft</a>
+        <li class="nav-divider"></li>
+        <li>
+            <a href="{$baseurl}">Draft</a>
         </li>
         <li>
-            <a href="#">Submit</a>
+            <a href="{$baseurl}release">Rilis </a>
         </li>
-        <li>
-            <a href="#">Rilis</a>
-        </li>
+        <li class="nav-divider"></li>
+        <li><a href="{$baseurl}logout">Logout</a></li>
+        
     </ul>
 </div>
+
 <!-- /#sidebar-wrapper -->

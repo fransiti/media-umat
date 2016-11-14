@@ -17,7 +17,6 @@ class Draft extends Model{
         'judul'=>'VARCHAR(255)',
         'url'=>'VARCHAR(255)',
         'status'=>'INT(1) DEFAULT 1',
-        'seq'=>'INT(2) DEFAULT 0',
         'tipe'=>'INT(1)',
         'ekserp'=>'TEXT',
         'isi'=>'text',
