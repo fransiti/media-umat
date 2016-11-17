@@ -9,6 +9,7 @@
                         <tr>
                             <th>Tgl</th>
                             <th>Judul</th>
+                            <th>Tipe</th>
                             <th>Status</th>
                             
                             <th class="text-right">
@@ -23,6 +24,7 @@
                         <tr>
                             <td>{$val['tgl']}</td>
                             <td>{$val['judul']}</td>
+                            <td>{$tipe[{$val['tipe']}]}</td>
                             <td class="{$color[{$val['status']}]}">{$status[{$val['status']}]}</td>
                             <td class="text-right">{if $val['status']!='2'}
                                 {if $val['status']==1} 

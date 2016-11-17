@@ -5,12 +5,12 @@ table untuk login pengirim
 */
 class Admaccess extends Model{
     protected $columns = array(
-        'admprofile_id' =>  'INT',
+        'admprofile_id' =>  'INT DEFAULT 0',
         'email'         =>  'VARCHAR(128)',
         'pwd'           =>  'VARCHAR(128)',
         'level'         =>  'INT(1)',
     );
-    protected $firsdata = array(
+    protected $firstdata = array(
         array(
             'email' =>  'admin@email.com',
             'pwd'   =>  'admin',
@@ -18,12 +18,14 @@ class Admaccess extends Model{
             ),
     );
     
-    public $level= array(
+    public $adminlevel= array(
         '1' => 'Pimpinan Redaksi',
-        '2' => 'Staf Khusus',
-        '3' => 'Redaksi', 
+        '2' => 'Staf Khusus / Pertimbangan',
+        '3' => 'Dewan Redaksi / Editor', 
+        '4' => 'Tata Usaha',
     );
     
+
     
 /* akhir admaccess */   
 }

@@ -23,7 +23,9 @@ class Reporter extends BaseCtrl{
     protected function need_login(){
         if(!$this->_login) $this->redir('login');
         $this->_view->set('profile_nama',$this->session->get('ctrprofile_nama'));
-        $this->_view->set('profile_ava',$this->session->get('ctrprofile_ava'));
+        $ava=$this->session->get('ctrprofile_ava');
+        if(empty($ava)) $ava='notfound.jpg';
+        $this->_view->set('profile_ava',$ava);
     }
         
         
@@ -248,6 +250,7 @@ class Reporter extends BaseCtrl{
     protected function compose_berita(){
         if($this->_post->submitted()){
             $this->draft->add($this->_post->all());
+            $this->draft->status='1';
             $this->draft->save();
             $this->redir();
         }
@@ -271,6 +274,7 @@ class Reporter extends BaseCtrl{
                 $this->draft->jam='CURTIME()';
                 $this->draft->colVal('url',$val);
                 $this->draft->draft_id=$draft_id;
+                $this->draft->status='1';
                 $this->draft->ctrprofile_id=$this->session->get('ctrprofile_id');
                 $this->draft->save();
             }
@@ -308,7 +312,7 @@ class Reporter extends BaseCtrl{
     handle
     video
     */
-    protected function compose_video($draft_id,$tipe){
+    protected function compose_video($draft_id){
         if($this->_post->submitted()){
             $urls=$this->_post->get('urls');
             $ids=$this->_post->get('ids');
@@ -317,6 +321,7 @@ class Reporter extends BaseCtrl{
                     $this->draft->id=$ids[$key];
                 $this->draft->tgl='CURDATE()';
                 $this->draft->jam='CURTIME()';
+                $this->draft->status='1';
                 $this->draft->colVal('url',$val);
                 $this->draft->draft_id=$draft_id;
                 $this->draft->ctrprofile_id=$this->session->get('ctrprofile_id');
@@ -366,9 +371,6 @@ class Reporter extends BaseCtrl{
     function compose(){
         /* draft baru */
         $this->need_login();
-        $this->addModel('rubrik');
-        $this->addModel('draft');
-        $this->rubrik->orderBy('id','asc');
         
         /* 
         prevent id kosong
@@ -376,9 +378,12 @@ class Reporter extends BaseCtrl{
         if(empty($this->_qry[0])) $this->redir();
         if(!is_numeric($this->_qry[0])) $this->redir();
         
+        $this->addModel('draft');
+        $this->addModel('rubrik');
+        $this->rubrik->orderBy('id','asc');
+        $this->_view->set('rubrik',$this->rubrik->select());
         $draft=$this->draft->select($this->_qry[0]);
         $this->_view->set('draft',$draft);
-        $this->_view->set('rubrik',$this->rubrik->select());
         
         switch ($draft['tipe']){
             case '2':$this->compose_foto($draft['id']);

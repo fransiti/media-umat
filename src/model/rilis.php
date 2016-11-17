@@ -5,15 +5,15 @@ class Rilis extends Model{
         'ctrprofile_id'=>'INT',
         'rubrik_id' =>'INT',
         'rilis_id' =>'INT',
+        'spcreport_id'=>'INT DEFAULT 0',
         'tgl'=>'DATE',
         'jam'=>'TIME',
-        'judul'=>'VARCHAR(128)',
-        'url'=>'VARCHAR',
-        'status'=>'INT(1)',
-        'seq'=>'INT(2) DEFAULT 0',
         'tipe'=>'INT',
-        'ekserp'=>'INT',
-        'isi'=>'INT',
+        'judul'=>'VARCHAR(255)',
+        'url'=>'VARCHAR(255)',
+        'status'=>'INT(1)',
+        'ekserp'=>'TEXT',
+        'isi'=>'TEXT',
     );
     function selectMonth($month=''){
         $month=empty($month)?'MONTH(CURDATE())':$month ;

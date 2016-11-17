@@ -4,6 +4,7 @@ class Rilistraffic extends Model{
         'rilis_id'=>'INT',
         'hits'=>'INT',
         'unixip'=>'INT',
+        'tgl'=>'DATE',
     );
     
 }

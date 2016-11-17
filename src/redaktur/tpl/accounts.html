@@ -1,0 +1,80 @@
+{include file="header.html"} {include file="sidebar.html"}
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>Daftar Account</h3>
+                <table class="table table-responsive">
+                    <thead>
+                        <tr><th>Foto</th>
+                            <th>Nama</th>
+                            <th>Level</th>
+                            <th class="text-right">
+                                <a href="{$baseurl}account-submit" class="btn btn-primary">Baru</a>
+                            </th>
+                            
+                            
+                            
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {$color=array('text-primary','text-info','text-success','text-danger','text-danger','text-warning') }
+                        {foreach $accounts as $key=>$val}
+                        <tr>
+                         
+                            <td><img src="{$ava}/{$val['admprofile_ava']}/48"></td>
+                            <td>{$val['admprofile_nama']}</td>
+                            <td class="{$color[{$val['level']}]}">{$level[{$val['level']}]}</td>
+                            <td class="text-right">
+                                <a href="{$baseurl}account-submit/{$val['id']}" class="text-success">Edit</a>&nbsp;
+                                <a href="#" class="text-danger btn-delete" data-id="{$val['id']}" data-title="{$val['admprofile_nama']}">Hapus</a>
+                            </td>
+                           
+                        </tr>
+                        {/foreach}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--{* modal konfirmasi hapus *}-->
+<div class="modal fade" id="del-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form name="del-form" role="form" action="{$baseurl}account_delete" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Konfirmasi Hapus</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p id="draft-title"></p>
+                        <input type="hidden" id="draft-id" name="id">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" name="submit" value="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script>
+ $(function(){
+     $('.btn-delete').click(function(e){
+         e.preventDefault();
+         var i=$(this).attr('data-id');
+         var t=$(this).attr('data-title');
+         $('#draft-title').html('Akun <strong>'+t+'</strong> akan dihapus ?');
+         $('#draft-id').val(i);
+         $('#del-dialog').modal();
+     });
+ });
+</script>
+{include file="footer.html"}

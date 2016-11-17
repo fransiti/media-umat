@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>login</title>
+    <title>Login</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{$css}/bootstrap.min.css" rel="stylesheet">
@@ -24,7 +24,12 @@
       <script src="{$js}/respond.min.js"></script>
     <![endif]-->
   </head>
-
+<style>
+    .form-signin{
+        
+        padding-bottom:80px;
+    }
+</style>
   <body>
 
     <div class="container">
@@ -37,8 +42,6 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required name="pwd">
         <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="submit">Sign in</button>
-        <hr>  
-          <p>Bila belum punya akun, silahkan <a href="{$baseurl}signup">Daftar</a></p>
       </form>
           
 

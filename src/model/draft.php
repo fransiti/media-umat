@@ -25,8 +25,14 @@ class Draft extends Model{
     public $statuskode = array(
         '1'=>'Saved',
         '2'=>'Submitted',
-        '3'=>'Reject : re Edit',
-        '4'=>'Reject : Content Warning',
-        '5'=>'Reject : Others',
+        '3'=>'Reject : Tatabahasa',
+        '4'=>'Reject : Isi bahaya',
+        '5'=>'Reject : Lainnya',
     );
+   public $draft_tipe = array(
+        '1'=>'Berita',
+        '2'=>'Foto',
+        '3'=>'Video',
+    );
+
 }

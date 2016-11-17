@@ -1,0 +1,159 @@
+{include file="header.html"} {include file="sidebar.html"}
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10">
+                <h3>PROFIL</h3>
+                <p class="text-info"><small><br><em>mengubah profil sebagai pengirim berita</em></small></p>
+                <hr> </div>
+            <div class="clearfix"></div>
+            <form class="form" name="form-signup" action="{$url}" method="post">
+                <div class="col-md-4"> <img src="{$ava}/{$profile['ava']}/240" id="img-display" class="img-responsive">
+                    <br>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cropit-dialog">Foto</button>
+                    <input type="hidden" name="ava" id="ava" value="{$profile['ava']}"> </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="nama">Nama</label>
+                        <input type="text" name="nama" class="form-control" required="required" value="{$profile['nama']}"> </div>
+                    <div class="form-group">
+                        <label for="level">Level</label>
+                        <select name="level" class="form-control"> {foreach $level as $key=>$val}
+                            <option value="{$key}" {if $key==$account[ 'level']}selected="selected" {/if}>{$val}</option> {/foreach} </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="profesi">Profesi</label>
+                        <input type="text" name="profesi" class="form-control" required="required" value="{$profile['profesi']}"> </div>
+                    <div class="form-group">
+                        <label for="tentang">Tentang</label>
+                        <textarea name="tentang" class="form-control" row="3" required="required">{$profile['tentang']}</textarea>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-10">
+                    <br>
+                    <h3>AKUN</h3>
+                    <p class="text-info"><small><em>* akun untuk login </em></small></p>
+                    <hr> 
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" class="form-control" required="required" value="{$account['email']}"> 
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">Password</label>
+                        <input type="text" name="pwd" class="form-control" required="required" value="{$account['pwd']}"> 
+                        <input type="hidden" name="admprofile_id" value="{$account['admprofile_id']}">
+                        <input type="hidden" name="id" value="{$account['id']}">
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <hr>
+                    <div class="form-group text-right"> <a href="{$baseurl}/accounts" class="btn btn-default">Batal</a>
+                        <button type="submit" name="submit" value="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</style>
+<!-- ava modal dialog ava -->
+<style>
+    .cropit-preview {
+        background-color: #f8f8f8;
+        background-size: cover;
+        border: 1px solid #ccc;
+        width: 240px;
+        height: 240px;
+        cursor: grabbing;
+    }
+    
+    .cropit-preview-background {
+        opacity: .2;
+        cursor: auto;
+    }
+    
+    .croppit-preview-wrapper {
+        padding: 30px;
+    }
+    
+    .icon-bg {
+        font-size: 7em;
+        left: 0;
+        top: 0;
+        padding: 0;
+    }
+</style>
+<div class="modal fade" id="cropit-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="image-upload">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title text-center text-muted" id="myModalLabel">Upload Image</h4> </div>
+                <div class="modal-body image-editor">
+                    <div class="croppit-preview-wrapper">
+                        <div class="cropit-preview"> <span class="glyphicon glyphicon-picture icon-bg"></span> </div>
+                    </div>
+                    <input type="file" class="cropit-image-input">
+                    <br>
+                    <div class="image-size-label"> <small class="text-info"><em>Geser slider untuk zoom dan geser gambar untuk mengatur posisi</em></small> </div>
+                    <input type="range" class="cropit-image-zoom-input form-control">
+                    <input type="hidden" name="image-data" id="image-data"> <small>
+                <span class="text-info"><em>Ukuran file foto min : 20kb dan max : 2mb</em></span>
+                </small> </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" name="submit" value="submit">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /ava modal dialog  -->
+<script src="{$js}/jquery.cropit.js"></script>
+<script>
+    $(function () {
+        /* {*
+        event nge-crop lewat
+        canvas
+        dengan cropit
+        *} */
+        $('.image-editor').cropit({
+            imageBackground: true
+            , imageBackgroundBorderWidth: 30
+        , });
+        /*
+        {*
+        ekspor canvas  sebagai value untuk
+        hidden input dan dikirim lewat ajax,
+        nilai kembali berupa nama file
+        dijadikan value untuk ava
+        *} */
+        $('#image-upload').submit(function (e) {
+            var imageData = $('.image-editor').cropit('export', {
+                type: 'image/jpeg'
+                , quality: 1
+                , originalSize: true
+            , });
+            $('#image-data').val(imageData);
+            var formValue = $(this).serialize();
+            var ur = '{$baseurl}ava_post';
+            $.ajax({
+                type: 'post'
+                , url: ur
+                , data: formValue
+                , success: function (d) {
+                    var f = '{$ava}/' + d + '/240';
+                    $('#ava').val(d);
+                    $('#img-display').attr('src', f);
+                    $('#cropit-dialog').modal('hide');
+                }
+            });
+            return false;
+        });
+    });
+</script> {include file="footer.html"}

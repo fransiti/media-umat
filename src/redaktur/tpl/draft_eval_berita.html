@@ -3,16 +3,15 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <h3>Berita</h3>
-                <small>Ini adalah Form untuk mengirimkan Berita Harian (berita dengan sebuah foto)</small>
+                <h3>Evaluasi Berita</h3>
+                <small class="text-info">Ini adalah Form untuk mengevaluasi dan mengedit Berita Harian (berita dengan sebuah foto)</small>
                 <hr>
-                <form name="form" class="form" role="form" action="{$url}" method="post">
+                <form name="form" class="form" id="main-form">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label> Foto Utama </label>   
                                 <img src="{$image}/{$draft['url']}/240x180" class="img-responsive" id="img-display">
-                                <input type="hidden" name="url" id="img-file">
                                 <br>
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cropit-dialog">Upload</button>
                             </div>
@@ -21,7 +20,6 @@
                             <div class="form-group">
                                 <label for="judul">Judul</label>
                                 <input type="text" name="judul" value="{$draft['judul']}" class="form-control">
-                                <input type="hidden" name="id" value="{$draft['id']}">
                             </div>
                             <div class="form-group">
                                 <label for="judul">Rubrik</label>
@@ -45,9 +43,9 @@
                                     {/if}
                                     
                                     {/foreach}
-                                    
                                 </select>
                             </div>
+                                    
                             <div class="form-group">
                                 <label for="judul">Ekserp&nbsp;&nbsp;<small class="text-primary">*diisi alinea pertama atau abstraksi</small></label>
                                 <textarea name="ekserp" class="form-control" rows="5">{$draft['ekserp']}</textarea>
@@ -56,23 +54,98 @@
                                 <label for="isi">Isi&nbsp;&nbsp;</label>
                                 <textarea id="isi" name="isi" class="form-control" rows="30">{$draft['isi']}</textarea>
                             </div>
+                            <input type="hidden" name="url" id="img-file" value="{$draft['url']}">
+                            <input type="hidden" name="draft-id" value="{$draft['id']}">
+                            <input type="hidden" name="tipe" value="{$draft['tipe']}">
+                            <input type="hidden" name="ctrprofile_id" value="{$draft['ctrprofile_id']}">
+                            <input type="hidden" name="submit" value="submit">
                         </div>
                         <hr>
-                        <div class="col-md-12 text-right">
-                            <a href="{$baseurl}" class="btn btn-default">Cancel</a>&nbsp;
-                            <button type="submit" name="submit" value="submit" class="btn btn-primary">Save</button>&nbsp;
+                       <div class="col-md-12 text-right form-option"> 
+                           <a href="{$baseurl}drafts" class="btn btn-default">Cancel</a>&nbsp;&nbsp;
+                           <a href="{$baseurl}draft-forum" class="btn btn-warning btn-forum">Kirim ke Forum</a>&nbsp;
+                           <a href="#" class="btn btn-success" data-toggle="modal" data-target="#release-dialog">Release</a>&nbsp;
+                           <a href="#" class="btn btn-danger " data-toggle="modal" data-target="#reject-dialog">Reject</a>&nbsp; 
                         </div>
-                        
                     </div>
-                                
-                                
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-<!-- ava modal dialog ava -->
+
+<div class="modal fade" id="release-dialog" tabindex="-1" role="dialog" aria-labelledby="add-dialog-title" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form name="release-form" role="form" id="release-form" action="{$baseurl}draft-release" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="add-dialog-title">Release</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Masukkan dalam kelompok<br>
+                            <small class="text-info">
+                                pilih Harian bila bukan Laporan Khusus
+                            </small>
+                        </label>
+                        
+                        <select name="spcreport_id" class="form-control">
+                            <option value="0">Harian</option>
+                            <optgroup label="Laporan Khusus">
+                                {foreach $spcreport as $key=>$val}
+                                <option value="{$val['id']}">{$val['nama']}</option>
+                                {/foreach}
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                <div id="hidden-main-form" class="hidden">
+                    
+                </div>        
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" name="submit" value="submit" class="btn btn-primary">Release</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="reject-dialog" tabindex="-1" role="dialog" aria-labelledby="add-dialog-title" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form name="add-form" id="reject-form" role="form" action="{$baseurl}draft-reject" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="add-dialog-title">Reject</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="hidden" name="id" value="{$draft['id']}">
+                        <label>Alasan </label>
+                        <select name="status" class="form-control">
+                            {foreach $status as $key=>$val}
+                            <option value="{$key}">{$val}</option>
+                            {/foreach}
+                        </select> 
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" name="submit" value="submit" class="btn btn-danger btn-reject">Reject</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+
+<!-- crop modal dialog  -->
 <style>
     .cropit-preview {
         
@@ -100,7 +173,6 @@
     }
 </style>
 
-<!-- crop dialog -->
 <div class="modal fade" id="cropit-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -136,7 +208,8 @@
         </div>
     </div>
 </div>
-<!-- /ava modal dialog  -->
+<!-- /crop modal dialog  -->
+
 <script src="{$js}/tinymce.min.js"></script>    
 <script type="text/javascript">
     tinymce.init({ 
@@ -188,7 +261,15 @@
             });
             return false;
         });
+        $('#release-form').submit( function(e){
+            
+            var h=$('#main-form').html();
+            $('#hidden-main-form').html(h);
+            return  true;
+        });
+            
     });
+            
 </script>    
 
 

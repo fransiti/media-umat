@@ -37,6 +37,11 @@ class BaseCtrl{
         unset($_hta);
         
         $this->_qry=$this->_router->qry;
+        /*
+        biar nggak "raise error" saja
+        */
+        if(empty($this->_qry[0]))$this->_qry[0]='';
+        if(empty($this->_qry[1]))$this->_qry[1]='';
         
         $this->setUrl($this->_router->url);
         

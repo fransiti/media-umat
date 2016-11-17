@@ -23,19 +23,15 @@
                  <li><a href="{$baseurl}profile">Profile</a></li> 
                  <li><a href="{$baseurl}account">Account</a></li>
                  <li class="nav-divider"></li>
-                 <li><a href="{$baseurl}logout">Logout</a></li>
             </ul>
+        </li>
             
-        </li>
-        <li class="divider">
-            <a href="#">Draft</a>
-        </li>
-        <li>
-            <a href="#">Submit</a>
-        </li>
-        <li>
-            <a href="#">Rilis</a>
-        </li>
+        <li class="nav-divider"></li>
+        {foreach $sidebar_menu as $key=>$val}
+        <li><a href={$baseurl}{$key}>{$val}</a></li>
+        {/foreach}
+        <li class="nav-divider"></li>
+        <li><a href="{$baseurl}logout">Logout</a></li>
     </ul>
 </div>
 <!-- /#sidebar-wrapper -->

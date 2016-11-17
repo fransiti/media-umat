@@ -20,4 +20,5 @@ class Admprofile extends Model{
         'nama'  =>  '',
         'ava'   =>  '',
     );
+}
     

@@ -24,9 +24,5 @@ class Rubrik extends Model{
         '2'=>'Foto',
         '3'=>'Video',
     );
-    public $fragmentipe = array(
-        '4'=>'Laporan Khusus',
-        '5'=>'Profile',
-        );
     /* end of rubrik */
 }
