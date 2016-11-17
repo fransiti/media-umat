@@ -22,13 +22,17 @@
              <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                  <li><a href="{$baseurl}profile">Profile</a></li> 
                  <li><a href="{$baseurl}account">Account</a></li>
-                 <li class="nav-divider"></li>
+                 
             </ul>
         </li>
             
         <li class="nav-divider"></li>
         {foreach $sidebar_menu as $key=>$val}
+        {if $val=='-'}
+        <li class="nav-divider"></li>
+        {else}
         <li><a href={$baseurl}{$key}>{$val}</a></li>
+        {/if}
         {/foreach}
         <li class="nav-divider"></li>
         <li><a href="{$baseurl}logout">Logout</a></li>

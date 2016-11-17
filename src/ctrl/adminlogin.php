@@ -15,44 +15,13 @@ class AdminLogin extends BaseCtrl{
     protected $_login=false;
     protected $_level='0';
     
-    /*
-    1 - Pimred
-    2 - Staf khusus
-    3 - Dewan Redaksi
-    4 - Tatausaha
-    */
-    protected $sidebar_menu=array(
-       '1'=>array(
-           'accounts'=>'Atur Akun',
-           'rubrics'=>'Atur Rubrik',
-           'spc-reports'=>'Lap. Khusus',
-           'forum'=>'Forum',
-           'drafts'=>'Kiriman Berita', 
-           'release'=>'Rilis Hari Ini',
-        ),
-        '2'=>array(
-            'forum'=>'Forum',
-        ),
-        '3'=>array(
-            'spc-reports'=>'Lap. Khusus',
-            'forum'=>'Forum',
-            'drafts'=>'Kiriman Berita', 
-            'release'=>'Rilis Hari Ini',
-        ),
-        '4'=>array(
-            'adslist'=>'Atur Iklan',
-            'ads-release'=>'Iklan Hari Ini',
-            'release'=>'Rilis Hari Ini',
-        ),
-        
-    );
-    
     function __construct(){
         parent::__construct();
         $this->addModel('session');
         $this->_login=
             $this->session->id()==$this->session->get('login');
     }
+
 
 /*
     default redirect bila 

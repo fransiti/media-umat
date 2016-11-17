@@ -1,14 +1,59 @@
 <?php
 class Redaktur extends RedakturAdmin{
+        /*
+    1 - Pimred
+    2 - Staf khusus
+    3 - Dewan Redaksi
+    4 - Tatausaha
+    */
+    protected $sidebar_menu=array(
+       '1'=>array(
+           'accounts'=>'Atur Akun',
+           'rubrics'=>'Atur Rubrik',
+           '-'=>'-',
+           'spc-reports'=>'Lap. Khusus',
+           'forums'=>'Forum',
+           '-'=>'-',
+           'drafts'=>'Kiriman Berita', 
+           'releases'=>'Rilis Hari Ini',
+        ),
+        '2'=>array(
+            'forums'=>'Forum',
+        ),
+        '3'=>array(
+            'spc-reports'=>'Lap. Khusus',
+            'forums'=>'Forum',
+            '-'=>'-',
+            'drafts'=>'Kiriman Berita', 
+            'releases'=>'Rilis Hari Ini',
+        ),
+        '4'=>array(
+            'adslist'=>'Atur Iklan',
+            '-'=>'-',
+            'ads-release'=>'Iklan Hari Ini',
+            'releases'=>'Rilis Hari Ini',
+        ),
+        
+    );
+    
     function index(){
         $this->need_login();
-        /*
-        $this->_render=false;
-        echo '<pre>';
-        print_r($this->session->all());
-        echo '</pre>';
+        /* 
+        default masuk masing-masing level
         */
+        switch ($this->_level){
+            case '1':$this->redir('releases');
+                break;
+            case '2':$this->redir('forum');
+                break;
+            case '4':$this->redir('ads-release');
+                break;
+            default:$this->redir('drafts');
+                break;
+        }
+        
     }
+    
     function spc_reports(){
         $this->need_login();
         $this->addModel('spcreport');
@@ -83,42 +128,9 @@ class Redaktur extends RedakturAdmin{
         $this->_view->set('status',$status);
     }
         
-        
-            
-            
-            
-    /*
-    draft
-       protected $columns = array(
-        'ctrprofile_id' => 'INT',
-        'rubrik_id' => 'INT',
-        'draft_id' => 'INT DEFAULT 0',
-        'tgl'=>'DATE',
-        'jam'=>'TIME',
-        'tipe' =>'INT',
-        'judul'=>'VARCHAR(255)',
-        'url'=>'VARCHAR(255)',
-        'status'=>'INT(1) DEFAULT 1',
-        'tipe'=>'INT(1)',
-        'ekserp'=>'TEXT',
-        'isi'=>'text',
-    rilis    
-        'admprofile_id'=>'INT',
-        'ctrprofile_id'=>'INT',
-        'rubrik_id' =>'INT',
-        'rilis_id' =>'INT',
-        'tgl'=>'DATE',
-        'jam'=>'TIME',
-        'judul'=>'VARCHAR(128)',
-        'url'=>'VARCHAR',
-        'status'=>'INT(1)',
-        'seq'=>'INT(2) DEFAULT 0',
-        'tipe'=>'INT',
-        'ekserp'=>'INT',
-        'isi'=>'INT',
-    
-    );
-    */
+    function releases(){
+        $this->_render=0;
+    }
     function draft_release(){
         
         $this->need_login();
