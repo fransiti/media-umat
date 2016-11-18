@@ -11,7 +11,6 @@
                             <div class="form-group">
                                 <label for="judul">Judul</label>
                                 <input type="text" name="judul" value="{$draft['judul']}" class="form-control">
-                                <input type="hidden" name="id" value="{$draft['id']}"> </div>
                             <div class="form-group">
                                 <label for="judul">Rubrik</label>
                                 <select name="rubrik_id" class="form-control"> {foreach $rubrik as $key=>$val} {if empty($val['submenu'])}
@@ -36,13 +35,14 @@
                                 <div class="col-md-12" id="video-gallery"> {foreach $sub_draft as $key=>$val}
                                     <div class="form-group col-md-3"> {$video->youtube($val['url'])}
                                         <input type="hidden" name="ids[]" value="{$val['id']}">
+                                         <input type="hidden" name="urls[]" value="{$val['url']}">
                                         <br>
                                         <button type="button" class="btn btn-danger btn-delete" data-id="{$val['id']}">Hapus</button>
                                     </div> {/foreach} </div>
                                 <input type="hidden" name="url" id="img-file" value="{$draft['url']}">
                                 <input type="hidden" name="draft-id" value="{$draft['id']}">
                                 <input type="hidden" name="tipe" value="{$draft['tipe']}">
-                                <input type="hidden" name="ctrprofile_id" value="$draft['ctrprofile_id']">
+                                <input type="hidden" name="ctrprofile_id" value="{$draft['ctrprofile_id']}">
                                 <input type="hidden" name="submit" value="submit"> </div>
                         </div>
                         <hr>
@@ -50,7 +50,7 @@
                             <a href="{$baseurl}drafts" class="btn btn-default">Cancel</a>&nbsp;&nbsp; 
                             <a href="{$baseurl}draft-forum" class="btn btn-warning btn-forum">Kirim ke Forum</a>&nbsp; 
                             <a href="#" class="btn btn-success" data-toggle="modal" data-target="#release-dialog">Release</a>&nbsp; 
-                            <a href="#" class="btn btn-danger btn-reject" data-toggle="modal" data-target="reject-dialog">Reject</a>&nbsp; 
+                            <a href="#" class="btn btn-danger btn-reject" data-toggle="modal" data-target="#reject-dialog">Reject</a>&nbsp; 
                         </div>
                     </div>
                 </form>
@@ -111,7 +111,7 @@
                     <div class="form-group">
                         <input type="hidden" name="id" value="{$draft['id']}">
                         <label>Alasan </label>
-                        <select name="status">
+                        <select name="status" class="form-control">
                             {foreach $status as $key=>$val}
                             <option value="$key">{$val}</option>
                             {/foreach}

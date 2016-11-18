@@ -113,6 +113,7 @@ class Redaktur extends RedakturAdmin{
                 break;
         }
         $this->_view->set('rilis',$rilis);
+        $this->_view->set('sub_rilis',$sub_rilis);
     }
         
         
@@ -190,7 +191,6 @@ class Redaktur extends RedakturAdmin{
         $this->addModel('rilis');
         
         if($this->_post->submitted()){
-            
             /*
             draft pindah draft  ke rilis
             */

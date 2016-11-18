@@ -1,0 +1,13 @@
+<h3>{$rilis['judul']}</h3>
+<div style="height:20px"></div>
+     
+<p class="text-primary"><em>{$rilis['ekserp']}</em></p>
+<div style="height:20px"></div>
+
+<div class="row">
+    {foreach $sub_rilis as $key=>$val}
+    <div class="col-md-4">
+        <img src="{$image}/{$val['url']}/240" class="img-responsive">
+        <div>{$val['ekserp']}</div>
+    </div>
+{/foreach}
