@@ -1,4 +1,5 @@
 <?php
+
 $db = array (
   'host' => 'localhost',
   'name' => 'media_umat',

@@ -40,7 +40,6 @@ class Redaktur extends RedakturAdmin{
         $this->need_login();
         /* 
         default masuk masing-masing level
-        */
         switch ($this->_level){
             case '1':$this->redir('releases');
                 break;
@@ -51,6 +50,9 @@ class Redaktur extends RedakturAdmin{
             default:$this->redir('drafts');
                 break;
         }
+        
+        */
+        $this->redir('drafts');
         
     }
     
@@ -88,6 +90,40 @@ class Redaktur extends RedakturAdmin{
         $this->_view->set('draft',$this->draft->select());        
         $this->_view->set('tipe',$this->draft->draft_tipe);
     }
+    function release_view(){
+        
+        $this->need_login();
+        $this->addModel('rilis');
+        $id=$this->_qry[0];
+        $rilis=$this->rilis->colNames();
+        $sub_rilis=array();
+        if(!empty($id)&&is_numeric($id)){
+            $rilis=$this->rilis->select($id);
+            $this->rilis->andWhere('rilis_id',$id);
+            $sub_rilis=$this->rilis->select();
+        }
+        $video=new Video;
+        $this->_view->set('video',$video);
+        switch($rilis['tipe']){
+            case '2':$this->_view->setTpl('view_foto');
+                break;
+            case '3':$this->_view->setTpl('view_video');
+                break;
+            default :$this->_view->setTpl('view_berita');
+                break;
+        }
+        $this->_view->set('rilis',$rilis);
+    }
+        
+        
+        
+        
+
+        
+        
+                
+
+        
     function draft_eval(){
         $this->need_login();
         $this->addModel('draft');
@@ -102,6 +138,7 @@ class Redaktur extends RedakturAdmin{
         /*
         template berita/video/foto
         */
+        
         switch($draft['tipe']){
             case '2':$this->_view->setTpl('draft_eval_foto');
                 break;
@@ -129,8 +166,23 @@ class Redaktur extends RedakturAdmin{
     }
         
     function releases(){
-        $this->_render=0;
+        $this->need_login();
+        $this->addModel('rilis');
+        $this->addModel('ctrprofile');
+        $this->addModel('admprofile');
+        $this->addModel('rubrik');
+        $this->_view->set('tipe',$this->rubrik->tipe);
+        $this->rilis->leftJoin(
+            $this->ctrprofile->tableName(),$this->ctrprofile->column_avail
+        );
+        $this->rilis->leftJoin(
+            $this->admprofile->tableName(),$this->admprofile->column_avail
+        );
+        $this->rilis->andWhereFunction('tgl','CURDATE()');
+        $this->_view->set('rilis',$this->rilis->select());
+        
     }
+        
     function draft_release(){
         
         $this->need_login();

@@ -45,6 +45,7 @@ class RedakturAdmin extends AdminLogin{
         $this->addModel('admaccess');
         if($this->_post->submitted()){
             $all=$this->_post->all();
+            if(empty($all['ava']))$all['ava']='notfound';
             $all['id']=$this->_post->get('admprofile_id');
             $this->admprofile->add($all);
             $pr_id=$this->admprofile->save();
@@ -106,8 +107,8 @@ class RedakturAdmin extends AdminLogin{
     }
     
     function forums(){
-        /*
         $this->need_login();
+        /*
         $this->addModel('admforum');
         $this->addModel('draft');
         $this->addModel('admprofile');
@@ -151,8 +152,8 @@ class RedakturAdmin extends AdminLogin{
     ajax posting forum
     */
     function forum_submit(){
-        /*
         $this->need_login();
+        /*
         $this->addModel('admforum');
         $this->addModel('admprofile');
         $forum=array();
@@ -172,8 +173,8 @@ class RedakturAdmin extends AdminLogin{
     ajax update forum
     */
     function forum_update(){
-        /*
         $this->need_login();
+        /*
         $forum=array;
         if($this->_post->submitted('id')){
             $this->addModel('admforum');

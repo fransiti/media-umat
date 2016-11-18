@@ -4,7 +4,7 @@ class Rilis extends Model{
         'admprofile_id'=>'INT',
         'ctrprofile_id'=>'INT',
         'rubrik_id' =>'INT',
-        'rilis_id' =>'INT',
+        'rilis_id' =>'INT DEFAULT 0',
         'spcreport_id'=>'INT DEFAULT 0',
         'tgl'=>'DATE',
         'jam'=>'TIME',
