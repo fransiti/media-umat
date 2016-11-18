@@ -28,7 +28,12 @@ Tabel-tabel lainnya
 
 #### KOLOM-KOLOM
 
-kolom tipe pada `rilis` dan `draft` adalah tipe konten yaitu berita ( sebuah foto dan tulisan ),foto (untaian foto), video ( untaian video)  
+Kolom penting pada `rilis` dan `draft` adalah 
+
+- `tipe`  yaitu format konten berita ( sebuah foto dan tulisan ),foto (untaian foto), video ( untaian video)  
+- `ekserp` yaitu alenia pertama atau abstraksi. ini adalah teks untuk autopost, rss feed dan sitemap.
+
+
 
 .
 
